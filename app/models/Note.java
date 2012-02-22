@@ -17,7 +17,8 @@ public class Note extends Model {
 	@ManyToOne
     public NoteRow noteRow;
 	
-	public Note(String title, String text, int postionInRow) {
+	public Note(NoteRow noteRow, String title, String text, int postionInRow) {
+		this.noteRow = noteRow;
 		this.title = title;
 		this.text = text;
 		this.positionInRow = postionInRow;
