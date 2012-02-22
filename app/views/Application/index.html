@@ -1,4 +1,32 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
-#{welcome /}
+<style>
+	#todo, #doing { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
+	#todo li, #doing li { margin: 0 5px 5px 5px; padding: 25px; font-size: 1.2em; width: 320px; }
+	</style>
+	<script>
+	$(function() {
+	
+		$( "#todo, #doing" ).sortable({
+			placeholder: "test"
+		});
+		
+			$( "#todo, #doing" ).sortable({
+				connectWith: ".connectedSortable"
+			}).disableSelection();
+		
+	});
+	
+	</script>
+	
+	#{list items:noterows, as:'noterow'}
+			<ul id="todo" class="connectedSortable">
+			<h2>${noterow.title}</h2>
+				#{list items:noterow.notes, as:'note'}
+					<li id="${note.id}" class="ui-state-default">${note.title}</li>
+				#{/list}
+			</ul>
+		#{/list}
+
+

@@ -23,4 +23,8 @@ public class Note extends Model {
 		this.text = text;
 		this.positionInRow = postionInRow;
 	}
+	
+	public String toString() {
+		return title;
+	}
 }

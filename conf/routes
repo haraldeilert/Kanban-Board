@@ -4,8 +4,10 @@
 
 # Home page
 GET     /                                       Application.index
-
-GET 	/										NoteRows.list
+*	 	/admin	 								module:crud
+GET 	/admin								    Boards.list
+GET 	/admin									NoteRows.list
+GET 	/admin								    Notes.list
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

@@ -25,4 +25,8 @@ public class Board extends Model {
 	    this.save();
 	    return this;
 	}
+	
+	public String toString() {
+		return title;
+	}
 }

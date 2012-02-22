@@ -10,7 +10,8 @@ import models.*;
 public class Application extends Controller {
 
     public static void index() {
-        render();
+    	List noterows = NoteRow.find("order by id desc").fetch();
+        render(noterows);
     }
 
 }
