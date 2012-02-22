@@ -11,7 +11,7 @@ public class Board extends Model {
 
 	public String title;
 	
-	@OneToMany(mappedBy="noterow", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="board", cascade=CascadeType.ALL)
 	public List<NoteRow> noteRows;
 
 	public Board(String title) {

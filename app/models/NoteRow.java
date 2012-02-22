@@ -15,7 +15,7 @@ public class NoteRow extends Model {
 	@ManyToOne
     public Board board;
 	
-	@OneToMany(mappedBy="note", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="noteRow", cascade=CascadeType.ALL)
 	public List<Note> notes;
 	
 	public NoteRow(Board board, String title, int postion) {
@@ -30,5 +30,9 @@ public class NoteRow extends Model {
 	    this.notes.add(newNote);
 	    this.save();
 	    return this;
+	}
+	
+	public String toString() {
+		return title;
 	}
 }
