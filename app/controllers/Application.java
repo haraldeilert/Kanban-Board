@@ -16,19 +16,26 @@ public class Application extends Controller {
 		render(noterows, cssStr, cssStr2);
 	}
 
-	
-	public static void addNewNote(String title, String noterowtitle) {
+	public static void addNewNote(Long id, String title) {
+		System.out.println("******id: " + id);
+		System.out.println("******title: " + title);
 		
-		NoteRow noteRow = NoteRow.find("byTitle", noterowtitle).first();
-		Note note = Note.find("noteRow.title = ? order by positionInRow desc", noteRow.title).first();
-		
-		noteRow.addNote(title, title, note.positionInRow + 1);
+		NoteRow noteRow = NoteRow.findById(id);
+
+		noteRow.addNote(title, "", findLastPos(id) + 1);
 	}
-	
+
+	private static int findLastPos(Long noteRowId) {
+		Note note = Note.find("noteRow.id = ? order by positionInRow desc",
+				noteRowId).first();
+		return note.positionInRow;
+	}
+
 	private static String createCSSNameStr(List<NoteRow> noterows, String ext) {
 		String tmp = "";
 		for (NoteRow noteRow : noterows) {
-			tmp += "#sortable" + String.valueOf(noteRow.getId().intValue()) + ext + ",";	
+			tmp += "#sortable" + String.valueOf(noteRow.getId().intValue())
+					+ ext + ",";
 		}
 		return tmp.substring(0, tmp.length() - 1);
 	}

@@ -75,9 +75,12 @@
 					#{list items:noterow.notes, as:'note'}
 						<li class="ui-state-default">${note.title}</li> 
 					#{/list}
-					<textarea style="display:none;" placeholder="Add card"></textarea>
+
+					<div class="input">
+						<input type="text" size="30" name="addnote${noterow.id}" id="addnote${noterow.id}" class="xlarge">
+					</div>
 					<br/>
-					<a id="addNewNote" class="btn" noterowtitle="${noterow.title}" href="#">Add</a>
+					<input type="button" class="btn" id="button${noterow.id}" onClick="javascript:sendIt('${noterow.id}')" value="Add">
 					<br/>
 				</ul>
 			</div>
@@ -85,6 +88,7 @@
 				
 			
 			#{/list}
+						
 		</div>
 		<!-- Loop ends here -->
 	</div>
@@ -95,11 +99,13 @@
 	<!-- /container -->
 	
 	<script type="text/javascript" charset="utf-8">
-		$('#addNewNote').click(function(){
-			$.post('@{addNewNote()}', {title: prompt('Task title?'), noterowtitle: $(this).attr("noterowtitle")})
-		})
-
-
-
+	
+		function sendIt(str) {
+			var test = "addnote" + str;
+			//alert(test);
+			//alert(document.getElementById(test).value);
+			$.post('@{addNewNote()}', {id: str, title: document.getElementById(test).value})
+		}
+	
 	</script>
 	
