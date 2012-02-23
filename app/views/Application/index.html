@@ -4,7 +4,14 @@
 
 <style>
 	${cssStr} { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
-	${cssStr2} { margin: 0 5px 5px 5px; padding: 25px; font-size: 1.2em; width: 200px; }
+	${cssStr2} { margin: 0 5px 5px 5px; padding: 25px; font-size: 1.2em; width: 308px; }
+	
+.main-area{
+   border:1px solid #ccc;
+   text-align: center;
+   align: center;
+ }
+ 	
 </style>
 
 	<script>
@@ -56,18 +63,27 @@
 
 	<!-- Main hero unit for a primary marketing message or call to action -->
 	<div class="hero-unit">
+	
 		<div class="row">
 			<!-- Loop starts here -->
 			#{list items:noterows, as:'noterow'}
 
-			<div class="span4">
+			<div class="span4 main-area">
 				<h2>${noterow.title}</h2>
 				<ul id="sortable${noterow.id}" class="connectedSortable">
 
 					#{list items:noterow.notes, as:'note'}
-					<li class="ui-state-default">${note.title}</li> #{/list}
+						<li class="ui-state-default">${note.title}</li> 
+					#{/list}
+					<textarea style="display:none;" placeholder="Add card"></textarea>
+					<br/>
+					<a id="addNewNote" class="btn" noterowtitle="${noterow.title}" href="#">Add</a>
+					<br/>
 				</ul>
 			</div>
+			
+				
+			
 			#{/list}
 		</div>
 		<!-- Loop ends here -->
@@ -76,10 +92,14 @@
 
 
 	<hr>
-
-      <footer>
-        <p>&copy; Avega Kite 2012</p>
-      </footer>
-
-
 	<!-- /container -->
+	
+	<script type="text/javascript" charset="utf-8">
+		$('#addNewNote').click(function(){
+			$.post('@{addNewNote()}', {title: prompt('Task title?'), noterowtitle: $(this).attr("noterowtitle")})
+		})
+
+
+
+	</script>
+	

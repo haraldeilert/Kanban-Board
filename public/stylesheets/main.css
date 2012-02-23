@@ -1,0 +1,46 @@
+#betabanner{
+    position:absolute;
+    top:0;
+    right:0;
+
+    overflow:hidden;
+    z-index:50000;
+    height:200px;
+    width:175px;
+}
+
+#betabanner>div{
+    float:right;
+    width:300px;
+    z-index:50001;
+    margin-right:-100px;
+    margin-top:30px;
+
+    background: #fefcea; /* Old browsers */
+    background: -moz-linear-gradient(top,  #fefcea 0%, #f1da36 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fefcea), color-stop(100%,#f1da36)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #fefcea 0%,#f1da36 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #fefcea 0%,#f1da36 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #fefcea 0%,#f1da36 100%); /* IE10+ */
+    background: linear-gradient(top,  #fefcea 0%,#f1da36 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */
+
+    padding:20px;
+    font-size:45px;
+    color: #000;
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+
+    box-shadow: 0px 4px 6px #333;
+    -moz-box-shadow: 0px 4px 6px #333;
+    -webkit-box-shadow: 0px 4px 6px #333;
+    text-align:center;
+
+    border-top:1px solid #ccc;
+
+
+
+}

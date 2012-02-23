@@ -31,7 +31,7 @@ public class NoteRow extends Model {
 	    this.save();
 	    return this;
 	}
-	
+
 	public String toString() {
 		return title;
 	}
