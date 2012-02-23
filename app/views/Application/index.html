@@ -7,11 +7,27 @@
 	${cssStr2} { margin: 0 5px 5px 5px; padding: 25px; font-size: 1.2em; width: 308px; }
 	
 .main-area{
-   border:1px solid #ccc;
+   background-color: #F5F5F5;
+   border-radius: 6px 6px 6px 6px;
    text-align: center;
    align: center;
  }
- 	
+ 
+ .note{
+    background: repeat-x scroll 50% 50% #FFFFFF;
+    border: 1px solid #CCCCCC;
+    color: #1C94C4;
+    font-weight: bold;
+    outline: medium none;
+ }
+ 
+ .hero-unit-myversion {
+    background-color: #333333;
+    border-radius: 6px 6px 6px 6px;
+    margin-bottom: 30px;
+    padding: 60px;
+}
+
 </style>
 
 	<script>
@@ -62,7 +78,7 @@
     <div class="container">
 
 	<!-- Main hero unit for a primary marketing message or call to action -->
-	<div class="hero-unit">
+	<div class="hero-unit-myversion">
 	
 		<div class="row">
 			<!-- Loop starts here -->
@@ -70,12 +86,12 @@
 
 			<div class="span4 main-area">
 				<h2>${noterow.title}</h2>
-				<ul id="sortable${noterow.id}" class="connectedSortable">
-
+				<ul id="sortable${noterow.id}" class="connectedSortable span${noterow.id}">
+				
 					#{list items:noterow.notes, as:'note'}
-						<li class="ui-state-default">${note.title}</li> 
+						<li class="note">${note.title}</li> 
 					#{/list}
-
+				
 					<div class="input">
 						<input type="text" size="30" name="addnote${noterow.id}" id="addnote${noterow.id}" class="xlarge">
 					</div>
@@ -84,11 +100,7 @@
 					<br/>
 				</ul>
 			</div>
-			
-				
-			
-			#{/list}
-						
+			#{/list}					
 		</div>
 		<!-- Loop ends here -->
 	</div>
@@ -101,10 +113,14 @@
 	<script type="text/javascript" charset="utf-8">
 	
 		function sendIt(str) {
-			var test = "addnote" + str;
-			//alert(test);
-			//alert(document.getElementById(test).value);
-			$.post('@{addNewNote()}', {id: str, title: document.getElementById(test).value})
+			var tmp = "addnote" + str;
+			var tmp2 = ".span" + str;
+			
+				$.post('@{addNewNote()}', {id: str, title: document.getElementById(tmp).value}, function(jsonNote) {
+				$(tmp2).prepend(
+					'<li class="note">'+jsonNote.title+'</li>'
+				)
+			}, 'json')
 		}
 	
 	</script>

@@ -25,11 +25,12 @@ public class NoteRow extends Model {
 		this.position = postion;
 	}
 	
-	public NoteRow addNote(String title, String text, int position) {
+	public JsonNote addNote(String title, String text, int position) {
 	    Note newNote = new Note(this, title, text, position).save();
 	    this.notes.add(newNote);
 	    this.save();
-	    return this;
+	    JsonNote jsonNote = new JsonNote(title);
+	    return jsonNote;
 	}
 
 	public String toString() {

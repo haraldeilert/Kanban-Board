@@ -22,7 +22,8 @@ public class Application extends Controller {
 		
 		NoteRow noteRow = NoteRow.findById(id);
 
-		noteRow.addNote(title, "", findLastPos(id) + 1);
+		JsonNote jsonNote = noteRow.addNote(title, "", findLastPos(id) + 1);
+		renderJSON(jsonNote);
 	}
 
 	private static int findLastPos(Long noteRowId) {
