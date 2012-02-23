@@ -1,36 +1,85 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
+
 <style>
 	${cssStr} { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
-	#sortable2 li,#sortable1 li { margin: 0 5px 5px 5px; padding: 25px; font-size: 1.2em; width: 320px; }
+	${cssStr2} { margin: 0 5px 5px 5px; padding: 25px; font-size: 1.2em; width: 200px; }
 </style>
+
 	<script>
-	
-	
+		
 	$(function() {
 	
 		$( "${cssStr}" ).sortable({
 			placeholder: "ui-state-highlight"
 		});
 		
-			$( "${cssStr}" ).sortable({
-				connectWith: ".connectedSortable"
-			}).disableSelection();
-		
+		$( "${cssStr}" ).sortable({
+			connectWith: ".connectedSortable"
+		}).disableSelection();
+				
 	});
 	
 	</script>
-	
-	#{list items:noterows, as:'noterow'}
-			<ul id="sortable${noterow.id}" class="connectedSortable">
-			
-				#{list items:noterow.notes, as:'note'}
-					<li class="ui-state-default">${note.title}</li>
-				#{/list}
-			</ul>
-		#{/list}
+<div id="myModal" class="modal hide fade">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">&times;</a>
+		<h3>About</h3>
+	</div>
+	<div class="modal-body">
+		
+		<p>Exempel på vad man kan åstadkomma med<br/> HTML5, JQuery, Google App
+			Engine och Play Framework.</p>
 
-	
+	</div>
+</div>
+<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Kanban Board</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a data-toggle="modal" href="#myModal">About</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+	<!-- Main hero unit for a primary marketing message or call to action -->
+	<div class="hero-unit">
+		<div class="row">
+			<!-- Loop starts here -->
+			#{list items:noterows, as:'noterow'}
+
+			<div class="span4">
+				<h2>${noterow.title}</h2>
+				<ul id="sortable${noterow.id}" class="connectedSortable">
+
+					#{list items:noterow.notes, as:'note'}
+					<li class="ui-state-default">${note.title}</li> #{/list}
+				</ul>
+			</div>
+			#{/list}
+		</div>
+		<!-- Loop ends here -->
+	</div>
 
 
+
+	<hr>
+
+      <footer>
+        <p>&copy; Avega Kite 2012</p>
+      </footer>
+
+
+	<!-- /container -->
