@@ -4,7 +4,7 @@
 
 <style>
 	${cssStr} { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
-	${cssStr2} { margin: 0 5px 5px 5px; padding: 25px; font-size: 1.2em; width: 308px; }
+	${cssStr2} { margin: 0 5px 5px 5px; padding: 25px; font-size: 1.2em; width: 310px; }
 	
 .main-area{
    background-color: #F5F5F5;
@@ -15,7 +15,7 @@
  
  .note{
     background: repeat-x scroll 50% 50% #FFFFFF;
-    border: 1px solid #CCCCCC;
+    border-radius: 6px 6px 6px 6px;
     color: #1C94C4;
     font-weight: bold;
     outline: medium none;
@@ -27,7 +27,6 @@
     margin-bottom: 30px;
     padding: 60px;
 }
-
 </style>
 
 	<script>
@@ -52,7 +51,7 @@
 	</div>
 	<div class="modal-body">
 		
-		<p>Exempel på vad man kan åstadkomma med<br/> HTML5, JQuery, Google App
+		<p>Exempel på vad man kan åstadkomma med<br/> HTML5, JQuery, BootStrap, Google App
 			Engine och Play Framework.</p>
 
 	</div>
@@ -91,15 +90,17 @@
 					#{list items:noterow.notes, as:'note'}
 						<li class="note">${note.title}</li> 
 					#{/list}
-				
-					<div class="input">
-						<input type="text" size="30" name="addnote${noterow.id}" id="addnote${noterow.id}" class="xlarge">
-					</div>
-					<br/>
-					<input type="button" class="btn" id="button${noterow.id}" onClick="javascript:sendIt('${noterow.id}')" value="Add">
-					<br/>
+					<table border="1" width="100%" style="visibility: hidden" id="addToggle${noterow.id}">
+						<td><div class="input">
+								<input type="text" size="50" name="addnote${noterow.id}"
+									id="addnote${noterow.id}" class="xlarge">
+							</div></td>
+						<td><input type="button" class="btn" id="button${noterow.id}"
+							onClick="javascript:sendIt('${noterow.id}')" value="Add"></td>
+					</table>
+					<a id="addNoteToggle${noterow.id}" onclick="javascript:toggleAdd('${noterow.id}')" href="#">Add Note</a>
 				</ul>
-			</div>
+			</div>		
 			#{/list}					
 		</div>
 		<!-- Loop ends here -->
@@ -112,15 +113,27 @@
 	
 	<script type="text/javascript" charset="utf-8">
 	
+		function toggleAdd(str) {
+			var test = "addToggle"+str;
+			var test2 = "addNoteToggle"+str;
+			document.getElementById(test).style.visibility="visible";
+			document.getElementById(test2).style.visibility="hidden";
+		}
+	
 		function sendIt(str) {
 			var tmp = "addnote" + str;
 			var tmp2 = ".span" + str;
+			var tmp3 = "addToggle" + str;
+			var tmp4 = "addNoteToggle" + str;
 			
 				$.post('@{addNewNote()}', {id: str, title: document.getElementById(tmp).value}, function(jsonNote) {
-				$(tmp2).prepend(
+				$(tmp2).append(
 					'<li class="note">'+jsonNote.title+'</li>'
 				)
 			}, 'json')
+			document.getElementById(tmp).value = '';
+			document.getElementById(tmp3).style.visibility="visible";
+			document.getElementById(tmp4).style.visibility="visible";
 		}
 	
 	</script>
