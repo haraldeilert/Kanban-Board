@@ -7,7 +7,7 @@
 	${cssStr2} { margin: 0 5px 5px 5px; padding: 25px; font-size: 1.2em; width: 310px; }
 	
 .main-area{
-   background-color: #F5F5F5;
+   background-color: #E3E3E3;
    border-radius: 6px 6px 6px 6px;
    text-align: center;
    align: center;
@@ -26,21 +26,22 @@
     border-radius: 6px 6px 6px 6px;
     margin-bottom: 30px;
     padding: 60px;
+    width: 1200px;
 }
 </style>
 
 	<script>
 		
 	$(function() {
-	
-		$( "${cssStr}" ).sortable({
-			placeholder: "ui-state-highlight"
-		});
 		
-		$( "${cssStr}" ).sortable({
-			connectWith: ".connectedSortable"
-		}).disableSelection();
-				
+		$("${cssStr}").sortable({
+	        connectWith: '.connectedSortable',
+	        placeholder: "ui-state-highlight"
+	       
+	        
+		});
+	
+		$("${cssStr}").disableSelection();
 	});
 	
 	</script>
@@ -74,7 +75,8 @@
       </div>
     </div>
 
-    <div class="container">
+   <!--   <div class="container">-->
+   <div>
 
 	<!-- Main hero unit for a primary marketing message or call to action -->
 	<div class="hero-unit-myversion">
@@ -85,7 +87,7 @@
 
 			<div class="span4 main-area">
 				<h2>${noterow.title}</h2>
-				<ul id="sortable${noterow.id}" class="connectedSortable span${noterow.id}">
+				<ul id="sortable${noterow.id}" class="connectedSortable posRow${noterow.id}">
 				
 					#{list items:noterow.notes, as:'note'}
 						<li class="note">${note.title}</li> 
@@ -113,16 +115,18 @@
 	
 	<script type="text/javascript" charset="utf-8">
 	
+		function whoAmI(noteRowId, noteId, postionInRow) {
+			alert("I'm in row " + noteRowId + " my note id is " + noteId + " and my position is " + postionInRow);
+		}
+	
 		function toggleAdd(str) {
-			var test = "addToggle"+str;
-			var test2 = "addNoteToggle"+str;
-			document.getElementById(test).style.visibility="visible";
-			document.getElementById(test2).style.visibility="hidden";
+			document.getElementById("addToggle"+str).style.visibility="visible";
+			document.getElementById("addNoteToggle"+str).style.visibility="hidden";
 		}
 	
 		function sendIt(str) {
 			var tmp = "addnote" + str;
-			var tmp2 = ".span" + str;
+			var tmp2 = ".posRow" + str;
 			var tmp3 = "addToggle" + str;
 			var tmp4 = "addNoteToggle" + str;
 			
