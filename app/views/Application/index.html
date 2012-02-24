@@ -70,7 +70,27 @@ input:focus {
 		
 		<p>Exempel på vad man kan åstadkomma med<br/> HTML5, JQuery, BootStrap, Google App
 			Engine och Play Framework.</p>
-
+<ul class="thumbnails">
+        <li class="span4">
+          <a href="#" class="thumbnail">
+            <img src="@{'/public/images/play_logo.png'}" alt="">
+          </a>
+        </li>
+        <li class="span2">
+          <a href="#" class="thumbnail">
+            <img src="@{'/public/images/html5_logo.png'}" alt="">
+          </a>
+          
+        </li>
+        <li class="span2">
+          <a href="#" class="thumbnail">
+            <img src="@{'/public/images/appengine_logo.png'}" alt="">
+          </a><br/>
+          <a href="#" class="thumbnail">
+            <img src="@{'/public/images/jquery_logo.png'}" alt="">
+          </a>
+        </li>
+      </ul>
 	</div>
 </div>
 <div class="navbar navbar-fixed-top">
@@ -115,8 +135,7 @@ input:focus {
 								<input type="text" size="50" name="addnote${noterow.id}"
 									id="addnote${noterow.id}" class="xlarge">
 							</div></td><tr>
-						<td><input type="button" class="btn" id="button${noterow.id}"
-							onClick="javascript:sendIt('${noterow.id}')" value="Add"></td></tr>
+						<td><input type="button" class="btn" id="button${noterow.id}" onClick="javascript:sendIt('${noterow.id}')" value="Add"></td></tr>
 					</table>
 				<a id="addNoteToggle${noterow.id}" onclick="javascript:toggleAdd('${noterow.id}')" class="btn" href="#">Add Note</a>
 			</div>		
