@@ -24,6 +24,54 @@ public class Note extends Model {
 		this.positionInRow = postionInRow;
 	}
 	
+	public String getTitle() {
+		return title;
+	}
+
+
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+
+
+	public String getText() {
+		return text;
+	}
+
+
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+
+
+	public int getPositionInRow() {
+		return positionInRow;
+	}
+
+
+
+	public void setPositionInRow(int positionInRow) {
+		this.positionInRow = positionInRow;
+	}
+
+
+
+	public NoteRow getNoteRow() {
+		return noteRow;
+	}
+
+
+
+	public void setNoteRow(NoteRow noteRow) {
+		this.noteRow = noteRow;
+	}
+
+
+
 	public String toString() {
 		return title;
 	}

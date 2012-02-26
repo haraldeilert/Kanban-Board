@@ -52,7 +52,19 @@ input:focus {
 		
 		$("${cssStr}").sortable({
 	        connectWith: '.connectedSortable',
-	        placeholder: "ui-state-highlight"
+	        placeholder: "ui-state-highlight",
+	        start: function(event, ui) {
+	            item = ui.item;
+	            newList = oldList = ui.item.parent();
+	            startIndex =  ui.item.index();
+	        },
+	        stop: function(event, ui) { 
+	        	var noteId = item.attr('id');
+	        	updateNotePos(noteId, startIndex, ui.item.index(), oldList.attr('cleanid'), newList.attr('cleanid'));
+	        },
+	        change: function(event, ui) {  
+	            if(ui.sender) newList = ui.placeholder.parent();
+	        }
 	       
 	        
 		});
@@ -125,10 +137,10 @@ input:focus {
 
 			<div class="span4 main-area">
 				<h2>${noterow.title}</h2>
-				<ul id="sortable${noterow.id}" class="connectedSortable posRow${noterow.id}">
+				<ul id="sortable${noterow.id}" cleanid="${noterow.id}" class="connectedSortable posRow${noterow.id}">
 				
 					#{list items:noterow.notes, as:'note'}
-						<li class="note">${note.title}</li> 
+						<li id="${note.id}" positionInRow="${note.positionInRow}" class="note">${note.title}</li> 
 					#{/list}
 					
 				</ul>
@@ -161,6 +173,11 @@ input:focus {
 			document.getElementById("addToggle"+str).style.display="block";
 			document.getElementById("addNoteToggle"+str).style.display="none";
 		}
+		
+		function updateNotePos(noteId, startUiIndex, stopUiIndex, fromList, toList) {
+			$.post('@{updateNotePosition()}', {noteId: noteId, startUiIndex: startUiIndex, stopUiIndex: stopUiIndex,fromList: fromList, toList: toList})
+			
+		}
 	
 		function sendIt(str) {
 			var tmp = "addnote" + str;
@@ -168,14 +185,14 @@ input:focus {
 			var tmp3 = "addToggle" + str;
 			var tmp4 = "addNoteToggle" + str;
 			
-				$.post('@{addNewNote()}', {id: str, title: document.getElementById(tmp).value}, function(jsonNote) {
+				$.post('@{addNewNote()}', {id: str, title: document.getElementById(tmp).value, text: ""}, function(jsonNote) {
 				$(tmp2).append(
 					'<li class="note">'+jsonNote.title+'</li>'
 				)
 			}, 'json')
 			document.getElementById(tmp).value = '';
 			document.getElementById(tmp3).style.display="none";
-			document.getElementById(tmp4).style.display="block";
+			document.getElementById(tmp4).style.display="inline";
 		}
 	
 	</script>

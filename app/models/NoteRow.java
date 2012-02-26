@@ -16,6 +16,7 @@ public class NoteRow extends Model {
     public Board board;
 	
 	@OneToMany(mappedBy="noteRow", cascade=CascadeType.ALL)
+	@OrderBy("positionInRow ASC")
 	public List<Note> notes;
 	
 	public NoteRow(Board board, String title, int postion) {
@@ -32,7 +33,7 @@ public class NoteRow extends Model {
 	    JsonNote jsonNote = new JsonNote(title);
 	    return jsonNote;
 	}
-
+	
 	public String toString() {
 		return title;
 	}
