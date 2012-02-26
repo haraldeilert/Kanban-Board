@@ -17,19 +17,14 @@ public class Application extends Controller {
 	}
 
 	public static void addNewNote(Long id, String title, String text) {
-
 		NoteRow noteRow = NoteRow.findById(id);
-
 		JsonNote jsonNote = noteRow.addNote(title, text, (findLastPos(id) + 1));
 		renderJSON(jsonNote);
 	}
 
 	public static void updateNotePosition(int noteId, int startUiIndex,
 			int stopUiIndex, int fromList, int toList) {
-		System.out.println("noteID: " + noteId + " startUiIndex: "
-				+ startUiIndex + " stop: " + stopUiIndex + " from " + fromList
-				+ " to " + toList);
-
+		
 		NoteRow noteRowTo = NoteRow.findById((long) toList);
 		Note movedNote = Note.findById((long) noteId);
 		movedNote.setNoteRow(noteRowTo);
@@ -47,10 +42,9 @@ public class Application extends Controller {
 		}
 
 		// Rearrange positions in the From List
-
 		List<Note> notesTo = noteRowTo.notes;
 		for (Note note : notesTo) {
-			if (note.positionInRow > startUiIndex) {
+			if (note.getId() != (long) noteId && note.positionInRow >= stopUiIndex) {
 				note.positionInRow = note.positionInRow + 1;
 				note.save();
 			}
@@ -60,7 +54,6 @@ public class Application extends Controller {
 	private static int findLastPos(Long noteRowId) {
 		Note note = Note.find("noteRow.id = ? order by positionInRow desc",
 				noteRowId).first();
-		System.out.println("last Pos" + note.positionInRow);
 		return note.positionInRow;
 	}
 
@@ -71,8 +64,6 @@ public class Application extends Controller {
 					+ ext + ",";
 
 		}
-		System.out.println("******test: " + tmp);
-
 		return tmp.substring(0, tmp.length() - 1);
 	}
 
