@@ -80,7 +80,7 @@ input:focus {
 	</div>
 	<div class="modal-body">
 		
-		<p>Exempel på vad man kan åstadkomma med HTML5, JQuery, BootStrap, Heroku och Play Framework.</p>
+		<p>Exempel p&aring; vad man kan &aring;stadkomma med HTML5, JQuery, BootStrap, Heroku och Play Framework.</p>
 	<ul class="thumbnails">
 	 
         <li class="span2">
@@ -144,13 +144,15 @@ input:focus {
 					#{/list}
 					
 				</ul>
-				<table width="100%" style="display: none" id="addToggle${noterow.id}">
-						<td><div class="input">
+				
+						<div id="addToggle${noterow.id}" style="display: none" class="input">
 								<input type="text" size="50" name="addnote${noterow.id}"
 									id="addnote${noterow.id}" class="xlarge">
-							</div></td><tr>
-						<td><input type="button" class="btn" id="button${noterow.id}" onClick="javascript:sendIt('${noterow.id}')" value="Add"></td></tr>
-					</table>
+									<br/>
+									<input type="button" class="btn" id="button${noterow.id}" onClick="javascript:sendIt('${noterow.id}')" value="Add">
+					
+							</div>
+						
 				<a id="addNoteToggle${noterow.id}" onclick="javascript:toggleAdd('${noterow.id}')" class="btn" href="#">Add Note</a>
 			</div>		
 			#{/list}					
