@@ -3,6 +3,7 @@
 require:
         - play
         - play -> crud
+        - play -> heroku 0.2
         
         
       

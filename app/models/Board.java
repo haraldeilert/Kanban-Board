@@ -26,6 +26,22 @@ public class Board extends Model {
 	    return this;
 	}
 	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public List<NoteRow> getNoteRows() {
+		return noteRows;
+	}
+
+	public void setNoteRows(List<NoteRow> noteRows) {
+		this.noteRows = noteRows;
+	}
+
 	public String toString() {
 		return title;
 	}

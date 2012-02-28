@@ -1,0 +1,37 @@
+# Test data
+
+Board(mytestboard):
+    title:          MyTestBoard
+    
+NoteRow(todo):
+    board:      mytestboard
+    title:      ToDO
+    position:   0 
+        
+NoteRow(doing):
+    board:      mytestboard
+    title:      Doing
+    position:   1 
+        
+NoteRow(done):
+    board:      mytestboard
+    title:      Done
+    position:   2   
+           
+Note(n1):
+    noteRow:      todo
+    title:         Setup DB
+    text:         lorem ipsumdsf sdf dsf
+    positionInRow:  0   
+
+Note(n2):
+    noteRow:      doing
+    title:         Setup DB222
+    text:         lorem ipsumdsf sdf dsf
+    positionInRow: 0   
+    
+Note(n3):
+    noteRow:      done
+    title:         Setup DB333
+    text:         lorem ipsumdsf sdf dsf
+    positionInRow: 0
