@@ -26,12 +26,12 @@ Note(n1):
 
 Note(n2):
     noteRow:      doing
-    title:         Setup DB222
+    title:        Write Testcase
     text:         lorem ipsumdsf sdf dsf
     positionInRow: 0   
     
 Note(n3):
     noteRow:      done
-    title:         Setup DB333
+    title:        Create Mockup
     text:         lorem ipsumdsf sdf dsf
     positionInRow: 0
