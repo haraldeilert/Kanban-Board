@@ -147,7 +147,7 @@ input:focus {
 				<table width="100%" style="display: none" id="addToggle${noterow.id}">
 						<td><div class="input">
 								<input type="text" size="50" name="addnote${noterow.id}"
-									id="addnote${noterow.id}" class="xlarge">
+									id="${noterow.id}" class="xlarge">
 							</div></td><tr>
 						<td><input type="button" class="btn" id="button${noterow.id}" onClick="javascript:sendIt('${noterow.id}')" value="Add"></td></tr>
 					</table>
@@ -178,7 +178,15 @@ input:focus {
 			$.post('@{updateNotePosition()}', {noteId: noteId, startUiIndex: startUiIndex, stopUiIndex: stopUiIndex,fromList: fromList, toList: toList})
 			
 		}
-	
+		
+		$(function(){
+		    $("input:text[name*='addnote']").bind("keyup", function(e){
+		        if (e.which == '13') {
+					sendIt(this.id);
+				}
+		    });
+		});
+		
 		function sendIt(str) {
 			var tmp = "addnote" + str;
 			var tmp2 = ".posRow" + str;
