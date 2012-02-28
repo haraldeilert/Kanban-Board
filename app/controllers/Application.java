@@ -69,5 +69,13 @@ public class Application extends Controller {
 		}
 		return tmp.substring(0, tmp.length() - 1);
 	}
-
+	
+	public static class WebSocket extends WebSocketController {
+		      public static void listen() {
+		         while(inbound.isOpen()) {
+		            String event = await(StatefulModel.instance.event.nextEvent());
+		            outbound.send(event);
+		         }
+		      }
+		   }
 }

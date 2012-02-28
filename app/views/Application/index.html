@@ -162,51 +162,71 @@ input:focus {
 
 
 
+<div id="socketout"></div>
+
+ 
+
 	<hr>
 	<!-- /container -->
 	
 	<script type="text/javascript" charset="utf-8">
-	
+	// Create a socket
+    
+		var socket = new WebSocket('@@{Application.WebSocket.listen}')
+		// Message received on the socket
+		socket.onmessage = function(event) {
+			$('#socketout').append(event.data + "<br />");
+		}
+
 		function whoAmI(noteRowId, noteId, postionInRow) {
-			alert("I'm in row " + noteRowId + " my note id is " + noteId + " and my position is " + postionInRow);
+			alert("I'm in row " + noteRowId + " my note id is " + noteId
+					+ " and my position is " + postionInRow);
 		}
-	
+
 		function toggleAdd(str) {
-			document.getElementById("addToggle"+str).style.display="block";
-			document.getElementById("addNoteToggle"+str).style.display="none";
-			document.getElementById("addnote"+str).focus();
+			document.getElementById("addToggle" + str).style.display = "block";
+			document.getElementById("addNoteToggle" + str).style.display = "none";
+			document.getElementById("addnote" + str).focus();
 		}
-		
-		function updateNotePos(noteId, startUiIndex, stopUiIndex, fromList, toList) {
-			$.post('@{updateNotePosition()}', {noteId: noteId, startUiIndex: startUiIndex, stopUiIndex: stopUiIndex,fromList: fromList, toList: toList})
-			
+
+		function updateNotePos(noteId, startUiIndex, stopUiIndex, fromList,
+				toList) {
+			$.post('@{updateNotePosition()}', {
+				noteId : noteId,
+				startUiIndex : startUiIndex,
+				stopUiIndex : stopUiIndex,
+				fromList : fromList,
+				toList : toList
+			})
+
 		}
-		
-		$(function(){
-		    $("input:text[name*='addnote']").bind("keyup", function(e){
-		        if (e.which == '13') {
-		        	var idTmp = this.id;
-		        	idTmp = idTmp.replace("addnote", "");
-		            sendIt(idTmp);
+
+		$(function() {
+			$("input:text[name*='addnote']").bind("keyup", function(e) {
+				if (e.which == '13') {
+					var idTmp = this.id;
+					idTmp = idTmp.replace("addnote", "");
+					sendIt(idTmp);
 				}
-		    });
+			});
 		});
-		
+
 		function sendIt(str) {
 			var tmp = "addnote" + str;
 			var tmp2 = ".posRow" + str;
 			var tmp3 = "addToggle" + str;
 			var tmp4 = "addNoteToggle" + str;
-			
-				$.post('@{addNewNote()}', {id: str, title: document.getElementById(tmp).value, text: ""}, function(jsonNote) {
-				$(tmp2).append(
-					'<li class="note">'+jsonNote.title+'</li>'
-				)
+
+			$.post('@{addNewNote()}', {
+				id : str,
+				title : document.getElementById(tmp).value,
+				text : ""
+			}, function(jsonNote) {
+				$(tmp2).append('<li class="note">' + jsonNote.title + '</li>')
 			}, 'json')
 			document.getElementById(tmp).value = '';
-			document.getElementById(tmp3).style.display="none";
-			document.getElementById(tmp4).style.display="inline";
+			document.getElementById(tmp3).style.display = "none";
+			document.getElementById(tmp4).style.display = "inline";
 		}
-	
 	</script>
 	
