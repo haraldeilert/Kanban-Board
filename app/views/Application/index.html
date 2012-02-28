@@ -140,7 +140,7 @@ input:focus {
 				<ul id="sortable${noterow.id}" cleanid="${noterow.id}" class="connectedSortable posRow${noterow.id}">
 				
 					#{list items:noterow.notes, as:'note'}
-						<li id="${note.id}" positionInRow="${note.positionInRow}" class="note">${note.title} (${note.positionInRow})</li> 
+						<li id="${note.id}" positionInRow="${note.positionInRow}" class="note">${note.title}</li> 
 					#{/list}
 					
 				</ul>
