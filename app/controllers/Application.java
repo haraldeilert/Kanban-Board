@@ -1,11 +1,13 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import java.util.List;
 
-import java.util.*;
-
-import models.*;
+import models.JsonNote;
+import models.Note;
+import models.NoteRow;
+import models.StatefulModel;
+import play.mvc.Controller;
+import play.mvc.WebSocketController;
 
 public class Application extends Controller {
 
@@ -19,6 +21,7 @@ public class Application extends Controller {
 	public static void addNewNote(Long id, String title, String text) {
 		NoteRow noteRow = NoteRow.findById(id);
 		JsonNote jsonNote = noteRow.addNote(title, text, (findLastPos(id) + 1));
+		StatefulModel.instance.event.publish(id.toString() + ";" + title);
 		renderJSON(jsonNote);
 	}
 

@@ -64,11 +64,8 @@ input:focus {
 	        },
 	        change: function(event, ui) {  
 	            if(ui.sender) newList = ui.placeholder.parent();
-	        }
-	       
-	        
+	        }   
 		});
-	
 		$("${cssStr}").disableSelection();
 	});
 	
@@ -160,12 +157,6 @@ input:focus {
 		<!-- Loop ends here -->
 	</div>
 
-
-
-<div id="socketout"></div>
-
- 
-
 	<hr>
 	<!-- /container -->
 	
@@ -175,7 +166,16 @@ input:focus {
 		var socket = new WebSocket('@@{Application.WebSocket.listen}')
 		// Message received on the socket
 		socket.onmessage = function(event) {
-			$('#socketout').append(event.data + "<br />");
+			//$('#socketout').append(event.data + "<br />");
+			var data = event.data.split(";");
+			
+			var id = data[0];
+			var title = data[1];
+			var tmp2 = ".posRow" + id;
+			
+			$(tmp2).append('<li class="note">' + title + '</li>')
+			
+			
 		}
 
 		function whoAmI(noteRowId, noteId, postionInRow) {
@@ -222,8 +222,7 @@ input:focus {
 				title : document.getElementById(tmp).value,
 				text : ""
 			}, function(jsonNote) {
-				$(tmp2).append('<li class="note">' + jsonNote.title + '</li>')
-			}, 'json')
+				$(tmp2).append('<li class="note">' + jsonNote.title + '</li>') }, 'json')
 			document.getElementById(tmp).value = '';
 			document.getElementById(tmp3).style.display = "none";
 			document.getElementById(tmp4).style.display = "inline";

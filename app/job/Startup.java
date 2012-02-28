@@ -6,7 +6,7 @@ import play.jobs.OnApplicationStart;
 
 @OnApplicationStart(async = true)
 public class Startup extends Job {
-   public void doJob() throws InterruptedException {
+   public void doJob() throws InterruptedException {/*
       int i = 0;
 
       while (true) {
@@ -15,5 +15,5 @@ public class Startup extends Job {
          Thread.sleep(1000);
          StatefulModel.instance.event.publish("On step " + i);
       }
-   }
+   */}
 }
