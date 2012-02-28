@@ -54,7 +54,10 @@ public class Application extends Controller {
 	private static int findLastPos(Long noteRowId) {
 		Note note = Note.find("noteRow.id = ? order by positionInRow desc",
 				noteRowId).first();
-		return note.positionInRow;
+		if(note == null || note.positionInRow == 0)
+			return -1;
+		else
+			return note.positionInRow;
 	}
 
 	private static String createCSSNameStr(List<NoteRow> noterows, String ext) {

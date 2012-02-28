@@ -80,7 +80,7 @@ input:focus {
 	</div>
 	<div class="modal-body">
 		
-		<p>Exempel p√• vad man kan √•stadkomma med HTML5, JQuery, BootStrap, Heroku och Play Framework.</p>
+		<p>Exempel på vad man kan åstadkomma med HTML5, JQuery, BootStrap, Heroku och Play Framework.</p>
 	<ul class="thumbnails">
 	 
         <li class="span2">
@@ -147,7 +147,7 @@ input:focus {
 				<table width="100%" style="display: none" id="addToggle${noterow.id}">
 						<td><div class="input">
 								<input type="text" size="50" name="addnote${noterow.id}"
-									id="${noterow.id}" class="xlarge">
+									id="addnote${noterow.id}" class="xlarge">
 							</div></td><tr>
 						<td><input type="button" class="btn" id="button${noterow.id}" onClick="javascript:sendIt('${noterow.id}')" value="Add"></td></tr>
 					</table>
@@ -172,6 +172,7 @@ input:focus {
 		function toggleAdd(str) {
 			document.getElementById("addToggle"+str).style.display="block";
 			document.getElementById("addNoteToggle"+str).style.display="none";
+			document.getElementById("addnote"+str).focus();
 		}
 		
 		function updateNotePos(noteId, startUiIndex, stopUiIndex, fromList, toList) {
@@ -182,7 +183,9 @@ input:focus {
 		$(function(){
 		    $("input:text[name*='addnote']").bind("keyup", function(e){
 		        if (e.which == '13') {
-					sendIt(this.id);
+		        	var idTmp = this.id;
+		        	idTmp = idTmp.replace("addnote", "");
+		            sendIt(idTmp);
 				}
 		    });
 		});
