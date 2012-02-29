@@ -60,12 +60,13 @@ input:focus {
 	        },
 	        stop: function(event, ui) { 
 	        	var noteId = item.attr('id');
-	        	var newDate = new Date;//Used to find out how the sender
-	           	var identifyStr = newDate.getTime();
+	        	var newDate = new Date;
+	           	var identifyStr = newDate.getTime();//Used to find out who the sender
 	           	
 	        	document.getElementById("identifyStr").value = identifyStr;
 	           		
 	        	updateNotePos(noteId, startIndex, ui.item.index(), oldList.attr('cleanid'), newList.attr('cleanid'), identifyStr);
+	        	
 	        },
 	        change: function(event, ui) {  
 	            if(ui.sender) newList = ui.placeholder.parent();
@@ -163,7 +164,10 @@ input:focus {
 		<!-- Loop ends here -->
 	</div>
 
-<div id="identifyStr"></div>
+<input type="button" class="btn" id="dsffds" onClick="javascript:testSort()" value="Test">
+<input type="button" class="btn" id="dsffds2" onClick="javascript:testSort2()" value="Test2">					
+
+<div style="visible: none" id="identifyStr"></div>
 
 	<hr>
 	<!-- /container -->
@@ -184,7 +188,7 @@ input:focus {
 				var noteID = data[3];
 				var positionInRow = data[4];
 				var tmp2 = ".posRow" + noteRowId;
-				$(tmp2).append('<li id="'+ noteID +'" positionInRow="'+positionInRow+'" class="note">' + title + '</li>')
+				$(tmp2).append('<li id="'+ noteID +'" positionInRow="'+positionInRow+'" class="note">' + title + '('+positionInRow+')</li>')
 				
 			} else if(type == "moved") {
 				var id = data[1];
@@ -195,16 +199,32 @@ input:focus {
 				
 				if(document.getElementById("identifyStr").value != identify) {//RECEIVER
 					document.getElementById(id).style.display = "none";
-					$(".posRow" + to).append('<li id="'+ id +'" positionInRow="'+positionInRow+'" class="note">' + title + '</li>')
+					$(".posRow" + to).append('<li id="'+ id +'" positionInRow="'+positionInRow+'" class="note">' + title + '('+positionInRow+')</li>')
 					
-					//Sort list with jquery
-					$("ul#sortable" + to+">li").tsort({orderby:"positionInRow"});
+					
+					//Iterate over list and change positionValue
+					$("ul#sortable"+to).children('li').each(function(newPos, elm) {
+						  //alert("title: " + elm.firstChild.nodeValue + " elm: " + elm.getAttribute("positionInRow") + "new pos: " + newPos);
+						  elm.setAttribute("positionInRow", newPos);
+					});
+					
+					$("ul#sortable" + to+">li").tsort({order:'asc',attr:'positionInRow'});
 				} 
 				
 				
 			}
 			
 			
+		}
+	
+		function testSort() {
+			
+			$("ul#sortable2>li").tsort({orderby:"positionInRow"});
+		}
+		
+function testSort2() {
+			
+			$("ul#sortable2>li").tsort({order:'asc',attr:'positionInRow'});
 		}
 
 		function whoAmI(noteRowId, noteId, postionInRow) {
