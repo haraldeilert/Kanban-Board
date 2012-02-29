@@ -60,7 +60,6 @@ input:focus {
 	        },
 	        stop: function(event, ui) { 
 	        	var noteId = item.attr('id');
-	        	alert("noteID: " + noteId);
 	        	var newDate = new Date;//Used to find out how the sender
 	           	var identifyStr = newDate.getTime();
 	           	
@@ -198,10 +197,8 @@ input:focus {
 					document.getElementById(id).style.display = "none";
 					$(".posRow" + to).append('<li id="'+ id +'" positionInRow="'+positionInRow+'" class="note">' + title + '</li>')
 					
-					//$("ul#sortable" + to+">li").tsort({order:'desc',attr:'positionInRow'});
-					
 					//Sort list with jquery
-					$("ul#sortable" + to+">li").tsort("li[positionInRow]",{orderby:"positionInRow"});
+					$("ul#sortable" + to+">li").tsort({orderby:"positionInRow"});
 				} 
 				
 				

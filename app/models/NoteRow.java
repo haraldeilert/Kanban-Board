@@ -16,7 +16,7 @@ public class NoteRow extends Model {
     public Board board;
 	
 	@OneToMany(mappedBy="noteRow", cascade=CascadeType.ALL)
-	@OrderBy("positionInRow DESC")
+	@OrderBy("positionInRow ASC")
 	public List<Note> notes;
 	
 	public NoteRow(Board board, String title, int postion) {
@@ -30,7 +30,6 @@ public class NoteRow extends Model {
 	    Note newNote = new Note(this, title, text, position).save();
 	    this.notes.add(newNote);
 	    this.save();
-	    System.out.println("*****************new id: " + newNote.getId().intValue());
 	    JsonNote jsonNote = new JsonNote(newNote.getId().intValue(), title, newNote.getPositionInRow());
 	    return jsonNote;
 	}

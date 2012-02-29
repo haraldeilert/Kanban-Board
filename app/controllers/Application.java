@@ -21,11 +21,12 @@ public class Application extends Controller {
 	public static void addNewNote(Long id, String title, String text) {
 		NoteRow noteRow = NoteRow.findById(id);
 		int pos = (findLastPos(id) + 1);
-		
+
 		JsonNote jsonNote = noteRow.addNote(title, text, pos);
 		try {
-			//TODO: Create some object here instead
-			StatefulModel.instance.event.publish("add;" + id.toString() + ";" + title +";"+ jsonNote.id +";" + jsonNote.positionInRow);
+			// TODO: Create some object here instead
+			StatefulModel.instance.event.publish("add;" + id.toString() + ";"
+					+ title + ";" + jsonNote.id + ";" + jsonNote.positionInRow);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -35,11 +36,9 @@ public class Application extends Controller {
 
 	public static void updateNotePosition(int noteId, int startUiIndex,
 			int stopUiIndex, int fromList, int toList, String identify) {
-		
+
 		NoteRow noteRowTo = NoteRow.findById((long) toList);
-		
-		System.out.println("******noteId: " + noteId);
-		
+
 		Note movedNote = Note.findById((long) noteId);
 		movedNote.setNoteRow(noteRowTo);
 		movedNote.setPositionInRow(stopUiIndex);
@@ -58,20 +57,23 @@ public class Application extends Controller {
 		// Rearrange positions in the From List
 		List<Note> notesTo = noteRowTo.notes;
 		for (Note note : notesTo) {
-			if (note.getId() != (long) noteId && note.positionInRow >= stopUiIndex) {
+			if (note.getId() != (long) noteId
+					&& note.positionInRow >= stopUiIndex) {
 				note.positionInRow = note.positionInRow + 1;
 				note.save();
 			}
 		}
-		
-		StatefulModel.instance.event.publish("moved;" + movedNote.id.toString() + ";" + movedNote.title + ";" + toList + ";" + stopUiIndex +";" + identify);
+
+		StatefulModel.instance.event.publish("moved;" + movedNote.id.toString()
+				+ ";" + movedNote.title + ";" + toList + ";" + stopUiIndex
+				+ ";" + identify);
 	}
 
 	private static int findLastPos(Long noteRowId) {
 		Note note = Note.find("noteRow.id = ? order by positionInRow desc",
 				noteRowId).first();
-		
-		if(note == null || note.positionInRow == -1)
+
+		if (note == null || note.positionInRow == -1)
 			return -1;
 		else
 			return note.positionInRow;
@@ -86,18 +88,19 @@ public class Application extends Controller {
 		}
 		return tmp.substring(0, tmp.length() - 1);
 	}
-	
+
 	public static class WebSocket extends WebSocketController {
-		      public static void listen() {
-		         while(inbound.isOpen()) {
-		            try {
-						String event = await(StatefulModel.instance.event.nextEvent());
-						outbound.send(event);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		         }
-		      }
-		   }
+		public static void listen() {
+			while (inbound.isOpen()) {
+				try {
+					String event = await(StatefulModel.instance.event
+							.nextEvent());
+					outbound.send(event);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }
