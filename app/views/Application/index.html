@@ -205,7 +205,9 @@ input:focus {
 					//Iterate over list and change positionValue
 					$("ul#sortable"+to).children('li').each(function(newPos, elm) {
 						  //alert("title: " + elm.firstChild.nodeValue + " elm: " + elm.getAttribute("positionInRow") + "new pos: " + newPos);
-						  elm.setAttribute("positionInRow", newPos);
+						  if(elm.getAttribute("positionInRow") >= positionInRow && elm.getAttribute("id") != id) {
+						 	 elm.setAttribute("positionInRow", parseInt(elm.getAttribute("positionInRow")) + 1);
+						  }
 					});
 					
 					$("ul#sortable" + to+">li").tsort({order:'asc',attr:'positionInRow'});
