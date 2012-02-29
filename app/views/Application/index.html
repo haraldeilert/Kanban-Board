@@ -60,7 +60,13 @@ input:focus {
 	        },
 	        stop: function(event, ui) { 
 	        	var noteId = item.attr('id');
-	        	updateNotePos(noteId, startIndex, ui.item.index(), oldList.attr('cleanid'), newList.attr('cleanid'));
+	        	alert("noteID: " + noteId);
+	        	var newDate = new Date;//Used to find out how the sender
+	           	var identifyStr = newDate.getTime();
+	           	
+	        	document.getElementById("identifyStr").value = identifyStr;
+	           		
+	        	updateNotePos(noteId, startIndex, ui.item.index(), oldList.attr('cleanid'), newList.attr('cleanid'), identifyStr);
 	        },
 	        change: function(event, ui) {  
 	            if(ui.sender) newList = ui.placeholder.parent();
@@ -70,6 +76,7 @@ input:focus {
 	});
 	
 	</script>
+	
 <div id="myModal" class="modal hide fade">
 	<div class="modal-header">
 		<a class="close" data-dismiss="modal">&times;</a>
@@ -137,7 +144,7 @@ input:focus {
 				<ul id="sortable${noterow.id}" cleanid="${noterow.id}" class="connectedSortable posRow${noterow.id}">
 				
 					#{list items:noterow.notes, as:'note'}
-						<li id="${note.id}" positionInRow="${note.positionInRow}" class="note">${note.title}</li> 
+						<li id="${note.id}" positionInRow="${note.positionInRow}" class="note">${note.title}(${note.positionInRow})</li> 
 					#{/list}
 					
 				</ul>
@@ -157,6 +164,8 @@ input:focus {
 		<!-- Loop ends here -->
 	</div>
 
+<div id="identifyStr"></div>
+
 	<hr>
 	<!-- /container -->
 	
@@ -166,14 +175,37 @@ input:focus {
 		var socket = new WebSocket('@@{Application.WebSocket.listen}')
 		// Message received on the socket
 		socket.onmessage = function(event) {
-			//$('#socketout').append(event.data + "<br />");
 			var data = event.data.split(";");
 			
-			var id = data[0];
-			var title = data[1];
-			var tmp2 = ".posRow" + id;
+			var type = data[0];
 			
-			$(tmp2).append('<li class="note">' + title + '</li>')
+			if(type == "add") {
+				var noteRowId = data[1];
+				var title = data[2];
+				var noteID = data[3];
+				var positionInRow = data[4];
+				var tmp2 = ".posRow" + noteRowId;
+				$(tmp2).append('<li id="'+ noteID +'" positionInRow="'+positionInRow+'" class="note">' + title + '</li>')
+				
+			} else if(type == "moved") {
+				var id = data[1];
+				var title = data[2];
+				var to = data[3];
+				var positionInRow = data[4];
+				var identify = data[5];
+				
+				if(document.getElementById("identifyStr").value != identify) {//RECEIVER
+					document.getElementById(id).style.display = "none";
+					$(".posRow" + to).append('<li id="'+ id +'" positionInRow="'+positionInRow+'" class="note">' + title + '</li>')
+					
+					//$("ul#sortable" + to+">li").tsort({order:'desc',attr:'positionInRow'});
+					
+					//Sort list with jquery
+					$("ul#sortable" + to+">li").tsort("li[positionInRow]",{orderby:"positionInRow"});
+				} 
+				
+				
+			}
 			
 			
 		}
@@ -190,13 +222,14 @@ input:focus {
 		}
 
 		function updateNotePos(noteId, startUiIndex, stopUiIndex, fromList,
-				toList) {
+				toList, uniqueStr) {
 			$.post('@{updateNotePosition()}', {
 				noteId : noteId,
 				startUiIndex : startUiIndex,
 				stopUiIndex : stopUiIndex,
 				fromList : fromList,
-				toList : toList
+				toList : toList,
+				identify: uniqueStr
 			})
 
 		}
@@ -222,10 +255,15 @@ input:focus {
 				title : document.getElementById(tmp).value,
 				text : ""
 			}, function(jsonNote) {
-				$(tmp2).append('<li class="note">' + jsonNote.title + '</li>') }, 'json')
+				 }, 'json')
 			document.getElementById(tmp).value = '';
 			document.getElementById(tmp3).style.display = "none";
 			document.getElementById(tmp4).style.display = "inline";
+		}
+		
+		function SortMyList(listFrom, listTo) {
+		
+		
 		}
 	</script>
 	
