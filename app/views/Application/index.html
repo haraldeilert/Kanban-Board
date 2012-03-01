@@ -47,26 +47,27 @@ input:focus {
 </style>
 
 	<script>
-		
+	
+	function create( template, vars, opts ){
+		return $container.notify("create");
+	}
+			
 	$(function() {
+		
+		$container = $("#container-bottom").notify({ stack:'above' });
 		
 		$("${cssStr}").sortable({
 	        connectWith: '.connectedSortable',
 	        placeholder: "ui-state-highlight",
 	        start: function(event, ui) {
+	        	ui.placeholder.height(ui.item.height());
 	            item = ui.item;
 	            newList = oldList = ui.item.parent();
 	            startIndex =  ui.item.index();
 	        },
 	        stop: function(event, ui) { 
 	        	var noteId = item.attr('id');
-	        	var newDate = new Date;
-	           	var identifyStr = newDate.getTime();//Used to find out who the sender
-	           	
-	        	document.getElementById("identifyStr").value = identifyStr;
-	           		
-	        	updateNotePos(noteId, startIndex, ui.item.index(), oldList.attr('cleanid'), newList.attr('cleanid'), identifyStr);
-	        	
+	        	updateNotePos(noteId, startIndex, ui.item.index(), oldList.attr('cleanid'), newList.attr('cleanid'));
 	        },
 	        change: function(event, ui) {  
 	            if(ui.sender) newList = ui.placeholder.parent();
@@ -111,6 +112,7 @@ input:focus {
       </ul>
 	</div>
 </div>
+
 <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -134,7 +136,9 @@ input:focus {
 
 	<!-- Main hero unit for a primary marketing message or call to action -->
 	<div class="hero-unit-myversion">
-	
+	<!-- set the container hidden to avoid a flash of unstyled content
+when the page first loads -->
+
 		<div class="row">
 			<!-- Loop starts here -->
 			#{list items:noterows, as:'noterow'}
@@ -164,38 +168,41 @@ input:focus {
 		<!-- Loop ends here -->
 	</div>
 
-<input type="button" class="btn" id="dsffds" onClick="javascript:testSort()" value="Test">
-<input type="button" class="btn" id="dsffds2" onClick="javascript:testSort2()" value="Test2">					
-
 <div style="visible: none" id="identifyStr"></div>
+
+
 
 	<hr>
 	<!-- /container -->
 	
 	<script type="text/javascript" charset="utf-8">
-	// Create a socket
-    
+
+	// Create a socket    
 		var socket = new WebSocket('@@{Application.WebSocket.listen}')
 		// Message received on the socket
 		socket.onmessage = function(event) {
 			var data = event.data.split(";");
-			
 			var type = data[0];
+			var identify = data[1];
+			
+			if(document.getElementById("identifyStr").value != identify) {
+				create("container-bottom", { });
+			}	
 			
 			if(type == "add") {
-				var noteRowId = data[1];
-				var title = data[2];
-				var noteID = data[3];
-				var positionInRow = data[4];
+				var noteRowId = data[2];
+				var title = data[3];
+				var noteID = data[4];
+				var positionInRow = data[5];
 				var tmp2 = ".posRow" + noteRowId;
 				$(tmp2).append('<li id="'+ noteID +'" positionInRow="'+positionInRow+'" class="note">' + title + '('+positionInRow+')</li>')
 				
 			} else if(type == "moved") {
-				var id = data[1];
-				var title = data[2];
-				var to = data[3];
-				var positionInRow = data[4];
-				var identify = data[5];
+				var id = data[2];
+				var title = data[3];
+				var to = data[4];
+				var positionInRow = data[5];
+				
 				
 				if(document.getElementById("identifyStr").value != identify) {//RECEIVER
 					document.getElementById(id).style.display = "none";
@@ -211,24 +218,10 @@ input:focus {
 					});
 					
 					$("ul#sortable" + to+">li").tsort({order:'asc',attr:'positionInRow'});
-				} 
-				
-				
+				} 	
 			}
-			
-			
 		}
 	
-		function testSort() {
-			
-			$("ul#sortable2>li").tsort({orderby:"positionInRow"});
-		}
-		
-function testSort2() {
-			
-			$("ul#sortable2>li").tsort({order:'asc',attr:'positionInRow'});
-		}
-
 		function whoAmI(noteRowId, noteId, postionInRow) {
 			alert("I'm in row " + noteRowId + " my note id is " + noteId
 					+ " and my position is " + postionInRow);
@@ -241,14 +234,14 @@ function testSort2() {
 		}
 
 		function updateNotePos(noteId, startUiIndex, stopUiIndex, fromList,
-				toList, uniqueStr) {
+				toList) {
 			$.post('@{updateNotePosition()}', {
 				noteId : noteId,
 				startUiIndex : startUiIndex,
 				stopUiIndex : stopUiIndex,
 				fromList : fromList,
 				toList : toList,
-				identify: uniqueStr
+				identify: document.getElementById("identifyStr").value
 			})
 
 		}
@@ -268,11 +261,12 @@ function testSort2() {
 			var tmp2 = ".posRow" + str;
 			var tmp3 = "addToggle" + str;
 			var tmp4 = "addNoteToggle" + str;
-
+			
 			$.post('@{addNewNote()}', {
 				id : str,
 				title : document.getElementById(tmp).value,
-				text : ""
+				text : "",
+				identify: document.getElementById("identifyStr").value
 			}, function(jsonNote) {
 				 }, 'json')
 			document.getElementById(tmp).value = '';
@@ -280,9 +274,16 @@ function testSort2() {
 			document.getElementById(tmp4).style.display = "inline";
 		}
 		
-		function SortMyList(listFrom, listTo) {
+		var newDate = new Date;
+		document.getElementById("identifyStr").value = newDate.getTime();
 		
-		
-		}
 	</script>
-	
+
+<!--- second container -  bottom notifications --->
+	<div id="container-bottom" style="top:auto; left:0; bottom:0; margin:0 0 10px 10px;display: none">
+		<div>
+			<h1>INFO!</h1>
+			<p>Another user is currently updating the board, wait for the screen to update!</p>
+			
+		</div>
+	</div>

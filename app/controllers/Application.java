@@ -18,14 +18,14 @@ public class Application extends Controller {
 		render(noterows, cssStr, cssStr2);
 	}
 
-	public static void addNewNote(Long id, String title, String text) {
+	public static void addNewNote(Long id, String title, String text, String identify) {
 		NoteRow noteRow = NoteRow.findById(id);
 		int pos = (findLastPos(id) + 1);
 
 		JsonNote jsonNote = noteRow.addNote(title, text, pos);
 		try {
 			// TODO: Create some object here instead
-			StatefulModel.instance.event.publish("add;" + id.toString() + ";"
+			StatefulModel.instance.event.publish("add;" + identify +";"+ id.toString() + ";"
 					+ title + ";" + jsonNote.id + ";" + jsonNote.positionInRow);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -64,9 +64,8 @@ public class Application extends Controller {
 			}
 		}
 
-		StatefulModel.instance.event.publish("moved;" + movedNote.id.toString()
-				+ ";" + movedNote.title + ";" + toList + ";" + stopUiIndex
-				+ ";" + identify);
+		StatefulModel.instance.event.publish("moved;" + identify + ";" + movedNote.id.toString()
+				+ ";" + movedNote.title + ";" + toList + ";" + stopUiIndex);
 	}
 
 	private static int findLastPos(Long noteRowId) {
