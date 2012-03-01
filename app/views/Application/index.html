@@ -32,6 +32,12 @@
     
 }
 
+.myDiver{
+     min-height:50px;
+     height:auto !important;
+     height:50px; 
+}
+
 input {
 	width: 85%; height: 45px; padding: 20px 20px 0px 20px; margin: 0px 0px 0px 0px; 
 	background: #5E768D;
@@ -144,13 +150,13 @@ input:focus {
 	<!-- set the container hidden to avoid a flash of unstyled content
 when the page first loads -->
 
-		<div class="row">
+		<div class="row-fluid">
 			<!-- Loop starts here -->
 			#{list items:noterows, as:'noterow'}
 
 			<div class="span4 main-area">
 				<h2>${noterow.title}</h2>
-				<ul id="sortable${noterow.id}" cleanid="${noterow.id}" class="connectedSortable posRow${noterow.id}">
+				<ul id="sortable${noterow.id}" cleanid="${noterow.id}" class="connectedSortable posRow${noterow.id} myDiver">
 				
 					#{list items:noterow.notes, as:'note'}
 						<li id="${note.id}" positionInRow="${note.positionInRow}" class="note">${note.title}</li> 
