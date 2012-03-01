@@ -3,8 +3,8 @@
 
 
 <style>
-	${cssStr} { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
-	${cssStr2} { margin: 0 5px 5px 5px; padding: 25px; font-size: 1.2em; width: 310px; }
+	${cssStr} { list-style-type: none; margin: 5px 5px 5px 5px; padding: 0; float: auto; }
+	${cssStr2} { margin: 5px 5px 5px 5px; padding: 25px; font-size: 1.2em; float: auto; margin-right: auto; margin-left: auto; }
 	
 .main-area{
    background-color: #E3E3E3;
@@ -148,7 +148,7 @@ when the page first loads -->
 				<ul id="sortable${noterow.id}" cleanid="${noterow.id}" class="connectedSortable posRow${noterow.id}">
 				
 					#{list items:noterow.notes, as:'note'}
-						<li id="${note.id}" positionInRow="${note.positionInRow}" class="note">${note.title}(${note.positionInRow})</li> 
+						<li id="${note.id}" positionInRow="${note.positionInRow}" class="note">${note.title}</li> 
 					#{/list}
 					
 				</ul>
@@ -195,7 +195,7 @@ when the page first loads -->
 				var noteID = data[4];
 				var positionInRow = data[5];
 				var tmp2 = ".posRow" + noteRowId;
-				$(tmp2).append('<li id="'+ noteID +'" positionInRow="'+positionInRow+'" class="note">' + title + '('+positionInRow+')</li>')
+				$(tmp2).append('<li id="'+ noteID +'" positionInRow="'+positionInRow+'" class="note">' + title +'</li>')
 				
 			} else if(type == "moved") {
 				var id = data[2];
@@ -206,7 +206,7 @@ when the page first loads -->
 				
 				if(document.getElementById("identifyStr").value != identify) {//RECEIVER
 					document.getElementById(id).style.display = "none";
-					$(".posRow" + to).append('<li id="'+ id +'" positionInRow="'+positionInRow+'" class="note">' + title + '('+positionInRow+')</li>')
+					$(".posRow" + to).append('<li id="'+ id +'" positionInRow="'+positionInRow+'" class="note">' + title + '</li>')
 					
 					
 					//Iterate over list and change positionValue
