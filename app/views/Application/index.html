@@ -227,6 +227,12 @@ when the page first loads -->
 				var tmp2 = ".posRow" + noteRowId;
 				//$(tmp2).append('<li id="'+ noteID +'" positionInRow="'+positionInRow+'" class="note">' + title +'</li>')
 				appendLINode($(tmp2), noteID, title, positionInRow);
+			
+			} else if(type == "update" && document.getElementById("identifyStr").value != identify) {
+				var noteId = data[2];
+				var title = data[3];
+				
+				$('a.edit'+noteId).replaceWith(title)
 				
 			} else if(type == "moved") {
 				var id = data[2];

@@ -50,12 +50,13 @@ public class Application extends Controller {
 		}
 	}
 
-	public static void editNote(Long noteId, String newTitle) {
+	public static void editNote(Long noteId, String newTitle, String identify) {
 		JsonNote jsonNote = null;
 		
 		try {
 			jsonNote = Note.editNote(noteId, newTitle);
-			
+			StatefulModel.instance.event.publish("update;" + identify + ";" + noteId + ";"
+					+ newTitle);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
