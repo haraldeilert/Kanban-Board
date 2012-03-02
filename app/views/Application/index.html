@@ -59,6 +59,18 @@ input:focus {
 
 	<script>
 	
+	$(function() {
+		$('a[rel=popover]').popover({html : false}).click(function(e) {
+			e.preventDefault()
+		})
+	})
+	
+	function appendLINode(node, noteId, title, pos) {
+		node.append('<li id="'+noteId+'" positionInRow="'+pos+'" class="note"><a id="blob" class="test" onclick="javascript:deleteMe('+noteId+')" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#"><span class="close">x</span></a><a id="blob1" rel="popover" onclick="javascript:editMe('+noteId+')" title="Edit Note" data-content="Click here to edit the note!" href="#">'+title+'</a></li>') 
+		$("#blob").popover({offset: 10});
+		$("#blob1").popover({offset: 10});
+	}
+	
 	function create( template, vars, opts ){
 		return $container.notify("create");
 	}
@@ -159,7 +171,10 @@ when the page first loads -->
 				<ul id="sortable${noterow.id}" cleanid="${noterow.id}" class="connectedSortable posRow${noterow.id} myDiver">
 				
 					#{list items:noterow.notes, as:'note'}
-						<li id="${note.id}" positionInRow="${note.positionInRow}" class="note">${note.title}</li> 
+						<li id="${note.id}" positionInRow="${note.positionInRow}" class="note">
+						<a class="test" onclick="javascript:deleteMe(${note.id})" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#">
+						<span class="close"/>x</a>
+						<a rel="popover" onclick="javascript:editMe(${note.id})" title="Edit Note" data-content="Click here to edit the note!" href="#">${note.title}</a></li> 
 					#{/list}
 					
 				</ul>
@@ -181,11 +196,9 @@ when the page first loads -->
 
 <div style="visible: none" id="identifyStr"></div>
 
-
-
 	<hr>
 	<!-- /container -->
-	
+
 	<script type="text/javascript" charset="utf-8">
 	
 	// Create a socket   
@@ -202,13 +215,18 @@ when the page first loads -->
 				create("container-bottom", { });
 			}	
 			
-			if(type == "add") {
+			if(type == "delete") {
+				var noteId = data[2];
+				document.getElementById(noteId).style.display = "none";
+			
+			} else if(type == "add") {
 				var noteRowId = data[2];
 				var title = data[3];
 				var noteID = data[4];
 				var positionInRow = data[5];
 				var tmp2 = ".posRow" + noteRowId;
-				$(tmp2).append('<li id="'+ noteID +'" positionInRow="'+positionInRow+'" class="note">' + title +'</li>')
+				//$(tmp2).append('<li id="'+ noteID +'" positionInRow="'+positionInRow+'" class="note">' + title +'</li>')
+				appendLINode($(tmp2), noteID, title, positionInRow);
 				
 			} else if(type == "moved") {
 				var id = data[2];
@@ -219,9 +237,9 @@ when the page first loads -->
 				
 				if(document.getElementById("identifyStr").value != identify) {//RECEIVER
 					document.getElementById(id).style.display = "none";
-					$(".posRow" + to).append('<li id="'+ id +'" positionInRow="'+positionInRow+'" class="note">' + title + '</li>')
+				//	$(".posRow" + to).append('<li id="'+ id +'" positionInRow="'+positionInRow+'" class="note">' + title + '</li>')
 					
-					
+					appendLINode($(".posRow" + to), id, title, positionInRow);
 					//Iterate over list and change positionValue
 					$("ul#sortable"+to).children('li').each(function(newPos, elm) {
 						  //alert("title: " + elm.firstChild.nodeValue + " elm: " + elm.getAttribute("positionInRow") + "new pos: " + newPos);
@@ -234,10 +252,20 @@ when the page first loads -->
 				} 	
 			}
 		}
-	
-		function whoAmI(noteRowId, noteId, postionInRow) {
-			alert("I'm in row " + noteRowId + " my note id is " + noteId
-					+ " and my position is " + postionInRow);
+    
+		function deleteMe(noteId) {
+			$.post('@{deleteNote()}', {
+				noteId : noteId,
+				identify: document.getElementById("identifyStr").value
+			})
+		}
+		
+		function editMe(noteId, title) {
+			$.post('@{editNote()}', {
+				noteId : noteId,
+				newTitle: title,
+				identify: document.getElementById("identifyStr").value
+			})
 		}
 
 		function toggleAdd(str) {
@@ -256,7 +284,6 @@ when the page first loads -->
 				toList : toList,
 				identify: document.getElementById("identifyStr").value
 			})
-
 		}
 
 		$(function() {

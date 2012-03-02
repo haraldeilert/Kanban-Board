@@ -18,20 +18,46 @@ public class Application extends Controller {
 		render(noterows, cssStr, cssStr2);
 	}
 
-	public static void addNewNote(Long id, String title, String text, String identify) {
+	public static void addNewNote(Long id, String title, String text,
+			String identify) {
 		NoteRow noteRow = NoteRow.findById(id);
 		int pos = (findLastPos(id) + 1);
 
 		JsonNote jsonNote = noteRow.addNote(title, text, pos);
 		try {
 			// TODO: Create some object here instead
-			StatefulModel.instance.event.publish("add;" + identify +";"+ id.toString() + ";"
-					+ title + ";" + jsonNote.id + ";" + jsonNote.positionInRow);
+			StatefulModel.instance.event.publish("add;" + identify + ";"
+					+ id.toString() + ";" + title + ";" + jsonNote.id + ";"
+					+ jsonNote.positionInRow);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		renderJSON(jsonNote);
+	}
+
+	public static void deleteNote(Long noteId, String identify) {
+
+		try {
+			Note note = Note.findById(noteId);
+			note.delete();
+
+			StatefulModel.instance.event.publish("delete;" + identify + ";"
+					+ noteId.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void editNote(Long noteId, String newTitle, String identify) {
+
+		try {
+			System.out.println("sdfdfsfds: " + newTitle);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static void updateNotePosition(int noteId, int startUiIndex,
@@ -64,8 +90,9 @@ public class Application extends Controller {
 			}
 		}
 
-		StatefulModel.instance.event.publish("moved;" + identify + ";" + movedNote.id.toString()
-				+ ";" + movedNote.title + ";" + toList + ";" + stopUiIndex);
+		StatefulModel.instance.event.publish("moved;" + identify + ";"
+				+ movedNote.id.toString() + ";" + movedNote.title + ";"
+				+ toList + ";" + stopUiIndex);
 	}
 
 	private static int findLastPos(Long noteRowId) {
