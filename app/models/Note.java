@@ -23,6 +23,15 @@ public class Note extends Model {
 		this.text = text;
 		this.positionInRow = postionInRow;
 	}
+	
+	public static JsonNote editNote(Long id, String newTitle) {
+	    Note newNote = Note.findById(id);
+	    newNote.setTitle(newTitle);
+	    newNote.save();
+	    
+	    JsonNote jsonNote = new JsonNote(newNote.getId().intValue(), newTitle, newNote.getPositionInRow());
+	    return jsonNote;
+	}
 
 	public String getTitle() {
 		return title;

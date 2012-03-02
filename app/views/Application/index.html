@@ -66,7 +66,7 @@ input:focus {
 	})
 	
 	function appendLINode(node, noteId, title, pos) {
-		node.append('<li id="'+noteId+'" positionInRow="'+pos+'" class="note"><a id="blob" class="test" onclick="javascript:deleteMe('+noteId+')" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#"><span class="close">x</span></a><a id="blob1" rel="popover" onclick="javascript:editMe('+noteId+')" title="Edit Note" data-content="Click here to edit the note!" href="#">'+title+'</a></li>') 
+		node.append('<li id="'+noteId+'" positionInRow="'+pos+'" class="note"><a id="blob" class="test" onclick="javascript:deleteMe('+noteId+')" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#"><span class="close">x</span></a><a class="edit'+noteId+'" id="blob1" rel="popover" onclick="javascript:editMe('+noteId+')" title="Edit Note" data-content="Click here to edit the note!" href="#">'+title+'</a></li>') 
 		$("#blob").popover({offset: 10});
 		$("#blob1").popover({offset: 10});
 	}
@@ -174,7 +174,7 @@ when the page first loads -->
 						<li id="${note.id}" positionInRow="${note.positionInRow}" class="note">
 						<a class="test" onclick="javascript:deleteMe(${note.id})" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#">
 						<span class="close"/>x</a>
-						<a rel="popover" onclick="javascript:editMe(${note.id})" title="Edit Note" data-content="Click here to edit the note!" href="#">${note.title}</a></li> 
+						<a class="edit${note.id}" rel="popover" onclick="javascript:editMe(${note.id})" title="Edit Note" data-content="Click here to edit the note!" href="#">${note.title}</a></li> 
 					#{/list}
 					
 				</ul>
@@ -260,12 +260,14 @@ when the page first loads -->
 			})
 		}
 		
-		function editMe(noteId, title) {
+		function editMe(noteId) {
 			$.post('@{editNote()}', {
-				noteId : noteId,
-				newTitle: title,
+				noteId: noteId,
+				newTitle: prompt('Task title?'),
 				identify: document.getElementById("identifyStr").value
-			})
+				}, function(task) {
+				$('a.edit'+noteId).replaceWith(task.title)
+			}, 'json')
 		}
 
 		function toggleAdd(str) {

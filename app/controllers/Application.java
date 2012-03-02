@@ -50,14 +50,18 @@ public class Application extends Controller {
 		}
 	}
 
-	public static void editNote(Long noteId, String newTitle, String identify) {
-
+	public static void editNote(Long noteId, String newTitle) {
+		JsonNote jsonNote = null;
+		
 		try {
-			System.out.println("sdfdfsfds: " + newTitle);
+			jsonNote = Note.editNote(noteId, newTitle);
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		renderJSON(jsonNote);
 	}
 
 	public static void updateNotePosition(int noteId, int startUiIndex,
