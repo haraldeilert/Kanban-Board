@@ -5,18 +5,23 @@ Board(mytestboard):
     
 NoteRow(todo):
     board:      mytestboard
-    title:      ToDO
+    title:      ToDo
     position:   0 
         
 NoteRow(doing):
     board:      mytestboard
     title:      Doing
     position:   1 
-        
+    
 NoteRow(done):
     board:      mytestboard
     title:      Done
-    position:   2   
+    position:   2 
+        
+NoteRow(testing):
+    board:      mytestboard
+    title:      Testing
+    position:   3   
            
 Note(n1):
     noteRow:      todo
@@ -29,8 +34,14 @@ Note(n2):
     title:        Write Testcase
     text:         lorem ipsumdsf sdf dsf
     positionInRow: 0   
-    
+
 Note(n3):
+    noteRow:      testing
+    title:        Create Mockup
+    text:         lorem ipsumdsf sdf dsf
+    positionInRow: 0
+    
+Note(n4):
     noteRow:      done
     title:        Create Mockup
     text:         lorem ipsumdsf sdf dsf

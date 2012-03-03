@@ -166,7 +166,7 @@ when the page first loads -->
 			<!-- Loop starts here -->
 			#{list items:noterows, as:'noterow'}
 
-			<div class="span4 main-area">
+			<div class="span3 main-area">
 				<h2>${noterow.title}</h2>
 				<ul id="sortable${noterow.id}" cleanid="${noterow.id}" class="connectedSortable posRow${noterow.id} myDiver">
 				
@@ -332,6 +332,6 @@ when the page first loads -->
 		<div>
 			<div style="float:left;margin:0 10px 10px 10px"><img src="@{'/public/images/info-icon.png'}" alt="info" /></div>
 			<p>INFO!</p>
-			<p>Another user is currently updating the board, wait for the screen to update!</p>
+			<p>Another user is currently updating the board!</p>
 		</div>
 	</div>
