@@ -3,7 +3,6 @@
 require:
         - play
         - play -> crud
-        - play -> playapps 1.4
         
         
       

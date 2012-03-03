@@ -2,29 +2,10 @@
 <classpath>
 	<classpathentry excluding="views/**" kind="src" path="app"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="src" path="heroku-0.2"/>
 	<classpathentry kind="src" path="crud"/>
 	
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/framework/play-master-da9bb15.jar" sourcepath="/Users/haraldeilert/Applications/play-1.2.4/framework/src" />
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/heroku-api-0.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/heroku-http-apache-0.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/heroku-json-jackson-0.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/httpclient-4.1.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/httpcore-4.1.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/jackson-core-asl-1.9.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/jackson-mapper-asl-1.9.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/modules/heroku-0.2/lib/heroku-api-0.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/modules/heroku-0.2/lib/heroku-http-apache-0.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/modules/heroku-0.2/lib/heroku-json-jackson-0.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/modules/heroku-0.2/lib/heroku.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/modules/heroku-0.2/lib/herokudeployer-0.2-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/modules/heroku-0.2/lib/httpclient-4.1.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/modules/heroku-0.2/lib/httpcore-4.1.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/modules/heroku-0.2/lib/jackson-core-asl-1.9.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/modules/heroku-0.2/lib/jackson-mapper-asl-1.9.2.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/modules/heroku-0.2/lib/jsch-0.1.44-1.jar"/>
-	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/modules/heroku-0.2/lib/org.eclipse.jgit-1.1.0.201109151100-r.jar"/>
 	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/framework/lib/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/framework/lib/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/framework/lib/asm-all-3.3.1.jar"/>

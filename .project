@@ -15,9 +15,7 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.playframework.playclipse.playNature</nature>
 	</natures>
-	<linkedResources><link><name>heroku-0.2</name><type>2</type><location>/Users/haraldeilert/kanbanboard/modules/heroku-0.2/app</location></link>
-<link><name>conf/heroku-0.2</name><type>2</type><location>/Users/haraldeilert/kanbanboard/modules/heroku-0.2/conf</location></link>
-<link><name>crud</name><type>2</type><location>/Users/haraldeilert/Applications/play-1.2.4/modules/crud/app</location></link>
+	<linkedResources><link><name>crud</name><type>2</type><location>/Users/haraldeilert/Applications/play-1.2.4/modules/crud/app</location></link>
 <link><name>conf/crud</name><type>2</type><location>/Users/haraldeilert/Applications/play-1.2.4/modules/crud/conf</location></link>
 <link><name>public/crud</name><type>2</type><location>/Users/haraldeilert/Applications/play-1.2.4/modules/crud/public</location></link>
 </linkedResources>
