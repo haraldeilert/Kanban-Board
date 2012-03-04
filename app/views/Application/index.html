@@ -57,8 +57,27 @@ input:focus {
 }
 
 .placeHolderBG {
- background: repeat-x scroll 50% 50% #D3D3D3;
- border-radius: 6px 6px 6px 6px;
+ 	background: repeat-x scroll 50% 50% #D3D3D3;
+ 	border-radius: 6px 6px 6px 6px;
+ 	border: 1px dotted black;
+}
+
+.uiEffects {
+  -webkit-box-shadow:#333333 0 4px 6px;
+  border-radius: 6px 6px 6px 6px;
+  background-attachment:initial;
+  background-clip:initial;
+  background-color:initial;
+  background-image:-webkit-linear-gradient(top, #FFFFFF 0%, #FFFFFF 100%);
+  background-origin:initial;
+  background-position:initial initial;
+  background-repeat:initial initial;
+  border-top-color:#CCCCCC;
+  border-top-style:solid;
+  border-top-width:1px;
+  box-shadow:#333333 0 4px 6px;
+  color:#000000;
+  z-index:50001;
 }
 </style>
 
@@ -176,7 +195,7 @@ when the page first loads -->
 				<ul id="sortable${noterow.id}" cleanid="${noterow.id}" class="connectedSortable posRow${noterow.id} myDiver">
 				
 					#{list items:noterow.notes, as:'note'}
-						<li id="${note.id}" positionInRow="${note.positionInRow}" class="note">
+						<li onmouseover="javascript:borderEffectAdd(${note.id})" onmouseout="javascript:borderEffectRemove(${note.id})" id="${note.id}" positionInRow="${note.positionInRow}" class="note">
 						<a class="test" onclick="javascript:deleteMe(${note.id})" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#">
 						<span class="close"/>x</a>
 						<a class="edit${note.id}" rel="popover" onclick="javascript:editMe(${note.id})" title="Edit Note" data-content="Click here to edit the note!" href="#">${note.title}</a></li> 
@@ -205,6 +224,15 @@ when the page first loads -->
 	<!-- /container -->
 
 	<script type="text/javascript" charset="utf-8">
+	
+	function borderEffectAdd(id) {
+		//document.getElementById(id).style.border="1px solid black";
+		document.getElementById(id).setAttribute("class", "uiEffects");
+		}
+	
+	function borderEffectRemove(id) {
+		document.getElementById(id).setAttribute("class", "note");
+	}
 	
 	// Create a socket   
 	var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket;
