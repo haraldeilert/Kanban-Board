@@ -17,6 +17,7 @@ eclipse/
 /logs
 /precompiled
 /war
+/db
 
 # Packages #
 ############
