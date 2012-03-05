@@ -97,7 +97,7 @@ public class Application extends Controller {
 
 		StatefulModel.instance.event.publish("moved;" + identify + ";"
 				+ movedNote.id.toString() + ";" + movedNote.title + ";"
-				+ toList + ";" + stopUiIndex);
+				+ toList + ";" + fromList + ";" + stopUiIndex);
 	}
 
 	private static int findLastPos(Long noteRowId) {

@@ -287,21 +287,29 @@ input:focus {
 				var id = data[2];
 				var title = data[3];
 				var to = data[4];
-				var positionInRow = data[5];
-				
+				var from = data[5];
+				var positionInRow = data[6];
 				
 				if(document.getElementById("identifyStr").value != identify) {//RECEIVER
 					$('li').remove('#'+id);
 					
 					appendLINode($(".posRow" + to), id, title, positionInRow);
 					//Iterate over list and change positionValue
-					$("ul#sortable"+to).children('li').each(function(newPos, elm) {
+					$("ul#sortable"+to).children('li').each(function(newPos, elm) {  
 						  if(elm.getAttribute("positionInRow") >= positionInRow && elm.getAttribute("id") != id) {
-						 	 elm.setAttribute("positionInRow", parseInt(elm.getAttribute("positionInRow")) + 1);
+						     var newPosTmp = parseInt(elm.getAttribute("positionInRow")) + 1;
+						 	 elm.setAttribute("positionInRow", newPosTmp);
 						  }
 					});
-					
 					$("ul#sortable" + to+">li").tsort({order:'asc',attr:'positionInRow'});
+					
+					var incVal = 0;
+					//Fix from list values for positionrow
+					if(from != to) {
+						$("ul#sortable"+from).children('li').each(function(newPos, elm) {  
+							  elm.setAttribute("positionInRow", incVal++);
+						});
+					}
 				} 	
 			}
 		}
