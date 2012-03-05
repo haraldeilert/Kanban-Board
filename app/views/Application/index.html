@@ -266,7 +266,7 @@ input:focus {
 			
 			if(type == "delete") {
 				var noteId = data[2];
-				document.getElementById(noteId).style.display = "none";
+				$('li').remove('#'+noteId);
 			
 			} else if(type == "add") {
 				var noteRowId = data[2];
@@ -291,7 +291,7 @@ input:focus {
 				
 				
 				if(document.getElementById("identifyStr").value != identify) {//RECEIVER
-					document.getElementById(id).style.display = "none";
+					$('li').remove('#'+id);
 					
 					appendLINode($(".posRow" + to), id, title, positionInRow);
 					//Iterate over list and change positionValue
@@ -363,8 +363,7 @@ input:focus {
 				title : document.getElementById(tmp).value,
 				text : "",
 				identify: document.getElementById("identifyStr").value
-			}, function(jsonNote) {
-				 }, 'json')
+			}, function(jsonNote) {}, 'json')
 			document.getElementById(tmp).value = '';
 			document.getElementById(tmp3).style.display = "none";
 			document.getElementById(tmp4).style.display = "inline";
