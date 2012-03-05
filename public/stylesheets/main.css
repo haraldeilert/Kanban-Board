@@ -2,10 +2,9 @@
     position:absolute;
     top:0;
     right:0;
-
     overflow:hidden;
     z-index:50000;
-    height:100px;
+    height:110px;
     width:100px;
 }
 
@@ -40,7 +39,4 @@
     text-align:center;
 
     border-top:1px solid #ccc;
-
-
-
 }
