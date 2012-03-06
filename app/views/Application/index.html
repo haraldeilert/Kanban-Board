@@ -40,7 +40,7 @@
 input {
 	height: 45px; padding: 20px 20px 0px 20px; margin: 0px 0px 0px 0px; 
 	background: #ffffff;
-	background: -moz-linear-gradient(top, #ffffff 0%, #5E768D 20%); /* firefox */
+	background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 20%); /* firefox */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(20%,#ffffff)); /* webkit */
 	border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
 	-moz-box-shadow: 0px 1px 0px #f2f2f2;-webkit-box-shadow: 0px 1px 0px #f2f2f2;
@@ -50,7 +50,7 @@ input {
 
 input:focus {
 	background: #ffffff;
-	background: -moz-linear-gradient(top, #ffffff 0%, #728eaa 20%); /* firefox */
+	background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 20%); /* firefox */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(20%,#ffffff)); /* webkit */
 	float: auto; margin-right: auto; margin-left: auto;
 }
@@ -290,6 +290,8 @@ input:focus {
 				var from = data[5];
 				var positionInRow = data[6];
 				
+				//TODO: Refactor and optimize the code below
+				
 				if(document.getElementById("identifyStr").value != identify) {//RECEIVER
 					$('li').remove('#'+id);
 					
@@ -301,10 +303,11 @@ input:focus {
 						 	 elm.setAttribute("positionInRow", newPosTmp);
 						  }
 					});
+					//Sort the new list that received a new element
 					$("ul#sortable" + to+">li").tsort({order:'asc',attr:'positionInRow'});
 					
 					var incVal = 0;
-					//Fix from list values for positionrow
+					//A list have lost an element lets give it new position values
 					if(from != to) {
 						$("ul#sortable"+from).children('li').each(function(newPos, elm) {  
 							  elm.setAttribute("positionInRow", incVal++);
