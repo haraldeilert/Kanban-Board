@@ -52,17 +52,19 @@ public class Application extends Controller {
 
 	public static void editNote(Long noteId, String newTitle, String identify) {
 		JsonNote jsonNote = null;
-		
-		try {
-			jsonNote = Note.editNote(noteId, newTitle);
-			StatefulModel.instance.event.publish("update;" + identify + ";" + noteId + ";"
-					+ newTitle);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		System.out.println("*******newTitle: " + newTitle);
+		if (newTitle != null && !"".equals(newTitle)) {
+			try {
+				jsonNote = Note.editNote(noteId, newTitle);
+				StatefulModel.instance.event.publish("update;" + identify + ";"
+						+ noteId + ";" + newTitle);
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			renderJSON(jsonNote);
 		}
-		renderJSON(jsonNote);
 	}
 
 	public static void updateNotePosition(int noteId, int startUiIndex,

@@ -109,7 +109,7 @@ input:focus {
 	})
 	
 	function appendLINode(node, noteId, title, pos) {
-		node.append('<li id="'+noteId+'" positionInRow="'+pos+'" class="note"><a class="topCorner" id="blob" onclick="javascript:deleteMe('+noteId+')" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#"><span class="closeMe">x</span></a><a class="edit'+noteId+'" id="blob1" rel="popover" onclick="javascript:editMe('+noteId+')" title="Edit Note" data-content="Click here to edit the note!" href="#">'+title+'</a></li>') 
+		node.append('<li id="'+noteId+'" positionInRow="'+pos+'" class="note"><a class="topCorner" id="blob" onclick="javascript:deleteMe('+noteId+')" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#"><span class="closeMe">x</span></a><a class="edit'+noteId+'" id="blob1" rel="popover" onclick="javascript:editMe('+noteId+', '+title+')" title="Edit Note" data-content="Click here to edit the note!" href="#">'+title+'</a></li>') 
 		$("#blob").popover({offset: 10});
 		$("#blob1").popover({offset: 10});
 	}
@@ -216,7 +216,7 @@ input:focus {
 						<li onmouseover="javascript:borderEffectAdd(${note.id})" onmouseout="javascript:borderEffectRemove(${note.id})" id="${note.id}" positionInRow="${note.positionInRow}" class="note">
 						<div class="topCorner"><a onclick="javascript:deleteMe(${note.id})" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#">
 						<span class="closeMe"/>x</a></div>
-						<a class="edit${note.id}" rel="popover" onclick="javascript:editMe(${note.id})" title="Edit Note" data-content="Click here to edit the note!" href="#">${note.title}</a></li> 
+						<a class="edit${note.id}" rel="popover" onclick="javascript:editMe(${note.id}, '${note.title}')" title="Edit Note" data-content="Click here to edit the note!" href="#">${note.title}</a></li> 
 					#{/list}
 					
 				</ul>
@@ -324,14 +324,23 @@ input:focus {
 			})
 		}
 		
-		function editMe(noteId) {
+		function editMe(noteId, title) {
+			
+			var newTitlePrompt = prompt('Change title?', title);
+			
+			if(newTitlePrompt != null && newTitlePrompt != '') {
+			
 			$.post('@{editNote()}', {
 				noteId: noteId,
-				newTitle: prompt('Change title?'),
+				newTitle: newTitlePrompt,
 				identify: document.getElementById("identifyStr").value
 				}, function(task) {
-				$('a.edit'+noteId).replaceWith(task.title)
+					if(task.title != null && task.title != '')
+						$('a.edit'+noteId).replaceWith(task.title)
+				
 			}, 'json')
+			
+			}
 		}
 
 		function toggleAdd(str) {
