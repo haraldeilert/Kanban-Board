@@ -24,9 +24,6 @@ public class NoteRow extends Model {
 	@Column("board")
     public Board board;
 	
-	@Filter("notes")
-	public Query<Note> notes;
-	
 	public NoteRow(Board board, String title, int postion) {
 		this.board = board;
 		this.title = title;
@@ -43,7 +40,7 @@ public class NoteRow extends Model {
 	    JsonNote jsonNote = new JsonNote(newNote.getId().intValue(), title, newNote.getPositionInRow());
 	    return jsonNote;
 	}
-	
+		
 	public Long getId() {
 		return id;
 	}

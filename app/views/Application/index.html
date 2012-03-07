@@ -212,7 +212,7 @@ input:focus {
 				<h2>${noterow.title}</h2>
 				<ul id="sortable${noterow.id}" cleanid="${noterow.id}" class="connectedSortable posRow${noterow.id} myDiver">
 				
-					#{list items:noterow.notes, as:'note'}
+					#{list models.Note.findByNoteRow(noterow), as:'note'}
 						<li onmouseover="javascript:borderEffectAdd(${note.id})" onmouseout="javascript:borderEffectRemove(${note.id})" id="${note.id}" positionInRow="${note.positionInRow}" class="note">
 						<div class="topCorner"><a onclick="javascript:deleteMe(${note.id})" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#">
 						<span class="closeMe"/>x</a></div>

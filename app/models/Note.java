@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 import siena.Column;
 import siena.Filter;
 import siena.Generator;
@@ -35,6 +37,9 @@ public class Note extends Model {
         return Model.all(Note.class);
     }
 	
+	public static List<Note> findByNoteRow(NoteRow noteRow) {
+		return all().filter("noteRow", noteRow).fetch();
+	}
 	
 	public static JsonNote editNote(Long id, String newTitle) {
 	    Note newNote = all().filter("id", id).get();

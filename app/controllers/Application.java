@@ -14,6 +14,21 @@ public class Application extends Controller {
 
 	public static void index() {
 		
+		//TODO: Fix bootstrap with siena!!
+		List<NoteRow> noterows = NoteRow.all().order("position").fetch();
+		
+		if(noterows == null || noterows.isEmpty()) {
+			populate();
+			noterows = NoteRow.all().order("position").fetch();
+		}
+		
+		System.out.println("****test: " + noterows);
+		String cssStr = createCSSNameStr(noterows, "");
+		String cssStr2 = createCSSNameStr(noterows, " li");
+		render(noterows, cssStr, cssStr2);
+	}
+
+	private static void populate() {
 		Board board = new Board("test");
 		board.insert();
 		
@@ -26,19 +41,12 @@ public class Application extends Controller {
 		NoteRow noteRow2 = new NoteRow(board, "Done", 0);
 		noteRow2.insert();
 		
-		Note note = new Note(noteRow, "sdffds", "dsf", 0);
+		Note note = new Note(noteRow, "todo note", "dsf", 0);
 		note.insert();
-		Note note2 = new Note(noteRow1, "sdffds", "dsf", 0);
+		Note note2 = new Note(noteRow1, "doing note", "dsf", 0);
 		note2.insert();
-		Note note3 = new Note(noteRow2, "sdffds", "dsf", 0);
+		Note note3 = new Note(noteRow2, "done note", "dsf", 0);
 		note3.insert();
-		
-		List<NoteRow> noterows = NoteRow.all().order("position").fetch();
-		
-		System.out.println("****test: " + noterows);
-		String cssStr = createCSSNameStr(noterows, "");
-		String cssStr2 = createCSSNameStr(noterows, " li");
-		render(noterows, cssStr, cssStr2);
 	}
 
 	public static void addNewNote(Long id, String title, String text,
