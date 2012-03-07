@@ -3,26 +3,29 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import siena.Column;
+import siena.Filter;
 import siena.Generator;
 import siena.Id;
 import siena.Model;
 import siena.Query;
 import siena.Table;
-import siena.core.Many;
-import siena.core.Owned;
 
 @Table("noterows")
 public class NoteRow extends Model {
 	
 	@Id(Generator.AUTO_INCREMENT)
 	public Long id;
+	@Column("title")
 	public String title;
+	@Column("position")
 	public int position;
 	
+	@Column("board")
     public Board board;
 	
-    @Owned
-	public Many<Note> notes;
+	@Filter("notes")
+	public Query<Note> notes;
 	
 	public NoteRow(Board board, String title, int postion) {
 		this.board = board;
@@ -37,8 +40,6 @@ public class NoteRow extends Model {
 	public JsonNote addNote(String title, String text, int position) {
 	    Note newNote = new Note(this, title, text, position);
 	    newNote.insert();
-	    this.notes.asList().add(newNote);
-	    this.insert();
 	    JsonNote jsonNote = new JsonNote(newNote.getId().intValue(), title, newNote.getPositionInRow());
 	    return jsonNote;
 	}

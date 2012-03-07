@@ -1,6 +1,7 @@
 package models;
 
 import siena.Column;
+import siena.Filter;
 import siena.Generator;
 import siena.Id;
 import siena.Model;
@@ -20,8 +21,9 @@ public class Note extends Model {
 	@Column("position_in_row")
 	public int positionInRow;
 
+	@Filter("note_rows")
 	public NoteRow noteRow;
-
+	
 	public Note(NoteRow noteRow, String title, String text, int postionInRow) {
 		this.noteRow = noteRow;
 		this.title = title;

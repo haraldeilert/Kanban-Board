@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 
+import models.Board;
 import models.JsonNote;
 import models.Note;
 import models.NoteRow;
@@ -12,7 +13,29 @@ import play.mvc.WebSocketController;
 public class Application extends Controller {
 
 	public static void index() {
-		List<NoteRow> noterows = NoteRow.all().fetch();//TODO:Order by postion!!!!
+		
+		Board board = new Board("test");
+		board.insert();
+		
+		NoteRow noteRow = new NoteRow(board, "ToDo", 0);
+		noteRow.insert();
+		
+		NoteRow noteRow1 = new NoteRow(board, "Doing", 0);
+		noteRow1.insert();
+		
+		NoteRow noteRow2 = new NoteRow(board, "Done", 0);
+		noteRow2.insert();
+		
+		Note note = new Note(noteRow, "sdffds", "dsf", 0);
+		note.insert();
+		Note note2 = new Note(noteRow1, "sdffds", "dsf", 0);
+		note2.insert();
+		Note note3 = new Note(noteRow2, "sdffds", "dsf", 0);
+		note3.insert();
+		
+		List<NoteRow> noterows = NoteRow.all().order("position").fetch();
+		
+		System.out.println("****test: " + noterows);
 		String cssStr = createCSSNameStr(noterows, "");
 		String cssStr2 = createCSSNameStr(noterows, " li");
 		render(noterows, cssStr, cssStr2);
@@ -79,7 +102,9 @@ public class Application extends Controller {
 
 		// Rearrange positions in the From List
 		NoteRow noteRowFrom = NoteRow.all().filter("id", (long) fromList).get();
-		List<Note> notes = noteRowFrom.notes.asList();
+		
+		List<Note> notes = Note.all().filter("notes", noteRowFrom).fetch();
+		
 		for (Note note : notes) {
 			if (note.positionInRow > startUiIndex) {
 				note.positionInRow = note.positionInRow - 1;
@@ -88,7 +113,8 @@ public class Application extends Controller {
 		}
 
 		// Rearrange positions in the From List
-		List<Note> notesTo = noteRowTo.notes.asList();
+		List<Note> notesTo = Note.all().filter("notes", noteRowTo).fetch();
+		
 		for (Note note : notesTo) {
 			if (note.getId() != (long) noteId
 					&& note.positionInRow >= stopUiIndex) {
