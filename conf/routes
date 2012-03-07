@@ -6,11 +6,7 @@
 GET     /                                       Application.index
 WS      /socket                                 Application.WebSocket.listen
 
-*	 	/admin	 								module:crud
-GET 	/admin								    Boards.list
-GET 	/admin									NoteRows.list
-GET 	/admin								    Notes.list
-
+*       /admin                                                          module:crudsiena
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

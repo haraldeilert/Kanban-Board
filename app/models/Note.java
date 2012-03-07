@@ -1,20 +1,25 @@
 package models;
 
-import play.*;
-import play.db.jpa.*;
+import siena.Column;
+import siena.Generator;
+import siena.Id;
+import siena.Model;
+import siena.Query;
+import siena.Table;
 
-import javax.persistence.*;
-
-import java.util.*;
-
-@Entity
+@Table("notes")
 public class Note extends Model {
 
+	@Id(Generator.AUTO_INCREMENT)
+	public Long id;
+	
+	@Column("title")
 	public String title;
+	@Column("text")
 	public String text;
+	@Column("position_in_row")
 	public int positionInRow;
 
-	@ManyToOne
 	public NoteRow noteRow;
 
 	public Note(NoteRow noteRow, String title, String text, int postionInRow) {
@@ -24,13 +29,26 @@ public class Note extends Model {
 		this.positionInRow = postionInRow;
 	}
 	
+	public static Query<Note> all() {
+        return Model.all(Note.class);
+    }
+	
+	
 	public static JsonNote editNote(Long id, String newTitle) {
-	    Note newNote = Note.findById(id);
+	    Note newNote = all().filter("id", id).get();
 	    newNote.setTitle(newTitle);
 	    newNote.save();
 	    
 	    JsonNote jsonNote = new JsonNote(newNote.getId().intValue(), newTitle, newNote.getPositionInRow());
 	    return jsonNote;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getTitle() {
@@ -64,7 +82,7 @@ public class Note extends Model {
 	public void setNoteRow(NoteRow noteRow) {
 		this.noteRow = noteRow;
 	}
-
+	
 	public String toString() {
 		return title;
 	}

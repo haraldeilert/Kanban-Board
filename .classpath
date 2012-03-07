@@ -2,10 +2,52 @@
 <classpath>
 	<classpathentry excluding="views/**" kind="src" path="app"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="src" path="crud"/>
+	<classpathentry kind="src" path="crudsiena-2.0.2"/>
+	<classpathentry kind="src" path="gae-1.6.0"/>
+	<classpathentry kind="src" path="siena-2.0.7"/>
 	
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/framework/play-master-da9bb15.jar" sourcepath="/Users/haraldeilert/Applications/play-1.2.4/framework/src" />
+	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/commons-beanutils-core-1.7.0.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/commons-betwixt-0.8.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/commons-dbcp-1.2.1.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/commons-digester-1.7.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/commons-pool-1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/isorelax-20020414.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/msv-20020414.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/oro-2.0.8.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/relaxngDatatype-20020414.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/saxpath-1.0-FCS.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/kanbanboard/lib/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/crudsiena-2.0.2/lib/play-crudsiena.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/appengine-agent.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/appengine-agentimpl.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/appengine-agentruntime.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/appengine-api-labs.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/appengine-api-stubs.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/appengine-api.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/appengine-jsr107cache-1.6.0.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/appengine-local-runtime.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/appengine-remote-api.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/appengine-testing.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/appengine-tools-api.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/geronimo-jta_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/jsr107cache-1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/gae-1.6.0/lib/play-gae.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/commons-beanutils-core-1.7.0.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/commons-betwixt-0.8.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/commons-dbcp-1.2.1.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/commons-digester-1.7.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/commons-pool-1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/DdlUtils-1.0-siena-patched.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/isorelax-20020414.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/msv-20020414.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/oro-2.0.8.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/play-siena.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/relaxngDatatype-20020414.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/saxpath-1.0-FCS.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/siena-1.0.0-b6.jar"/>
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/siena-2.0.7/lib/stax-api-1.0.1.jar"/>
 	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/framework/lib/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/framework/lib/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/framework/lib/asm-all-3.3.1.jar"/>

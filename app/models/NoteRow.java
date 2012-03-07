@@ -1,39 +1,56 @@
 package models;
 
-import play.*;
-import play.db.jpa.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.*;
-import java.util.*;
+import siena.Generator;
+import siena.Id;
+import siena.Model;
+import siena.Query;
+import siena.Table;
+import siena.core.Many;
+import siena.core.Owned;
 
-@Entity
+@Table("noterows")
 public class NoteRow extends Model {
 	
+	@Id(Generator.AUTO_INCREMENT)
+	public Long id;
 	public String title;
 	public int position;
 	
-	@ManyToOne
     public Board board;
 	
-	@OneToMany(mappedBy="noteRow", cascade=CascadeType.ALL)
-	@OrderBy("positionInRow ASC")
-	public List<Note> notes;
+    @Owned
+	public Many<Note> notes;
 	
 	public NoteRow(Board board, String title, int postion) {
-		this.notes = new ArrayList<Note>();
 		this.board = board;
 		this.title = title;
 		this.position = postion;
 	}
 	
+	public static Query<NoteRow> all() {
+        return Model.all(NoteRow.class);
+    }
+	
 	public JsonNote addNote(String title, String text, int position) {
-	    Note newNote = new Note(this, title, text, position).save();
-	    this.notes.add(newNote);
-	    this.save();
+	    Note newNote = new Note(this, title, text, position);
+	    newNote.insert();
+	    this.notes.asList().add(newNote);
+	    this.insert();
 	    JsonNote jsonNote = new JsonNote(newNote.getId().intValue(), title, newNote.getPositionInRow());
 	    return jsonNote;
 	}
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -56,14 +73,6 @@ public class NoteRow extends Model {
 
 	public void setBoard(Board board) {
 		this.board = board;
-	}
-
-	public List<Note> getNotes() {
-		return notes;
-	}
-
-	public void setNotes(List<Note> notes) {
-		this.notes = notes;
 	}
 
 	public String toString() {

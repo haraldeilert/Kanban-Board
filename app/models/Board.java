@@ -1,45 +1,54 @@
 package models;
 
-import play.*;
-import play.db.jpa.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.*;
-import java.util.*;
+import siena.Column;
+import siena.Generator;
+import siena.Id;
+import siena.Model;
+import siena.Table;
+import siena.core.Many;
+import siena.core.Owned;
 
-@Entity
+@Table("boards")
 public class Board extends Model {
-
+	
+	@Id(Generator.AUTO_INCREMENT)
+	public Long id;
+	
+	@Column("title")
 	public String title;
 	
-	@OneToMany(mappedBy="board", cascade=CascadeType.ALL)
-	public List<NoteRow> noteRows;
+	@Owned
+	public Many<NoteRow> noteRows;
 
 	public Board(String title) {
-		this.noteRows = new ArrayList<NoteRow>();
 		this.title = title;
 	}
 	
 	public Board addNoteRow(String title, int position) {
-	    NoteRow newNoteRow = new NoteRow(this, title, position).save();
-	    this.noteRows.add(newNoteRow);
-	    this.save();
+	    NoteRow newNoteRow = new NoteRow(this, title, position);
+	    this.noteRows.asList().add(newNoteRow);
+	    newNoteRow.insert();
+	    this.insert();
 	    return this;
 	}
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getTitle() {
 		return title;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public List<NoteRow> getNoteRows() {
-		return noteRows;
-	}
-
-	public void setNoteRows(List<NoteRow> noteRows) {
-		this.noteRows = noteRows;
 	}
 
 	public String toString() {

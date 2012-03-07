@@ -2,7 +2,15 @@
 
 require:
         - play
-        - play -> crud
+        - play -> siena 2.0.7
+        - play -> gae 1.6.0
+        - play -> crudsiena 2.0.2
         
+repositories: 
+    - provided: 
+        type:       local 
+        artifact:   "${application.path}/jar/[module]-[revision].jar" 
+        contains: 
+            - provided -> *
         
       

@@ -1,7 +1,8 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import controllers.CRUD.For;
 
-public class Notes extends CRUD {
+@For(models.Note.class)
+public class Notes extends controllers.CRUD {
+
 }
