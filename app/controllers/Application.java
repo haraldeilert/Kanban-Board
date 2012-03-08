@@ -91,6 +91,10 @@ public class Application extends Controller {
 	public static void updateNotePosition(int noteId, int startUiIndex,
 			int stopUiIndex, int fromList, int toList) {
 
+		System.out.println("****startUiIndex: " + startUiIndex);
+		System.out.println("****stopUiIndex: " + stopUiIndex);
+		
+		
 		NoteRow noteRowTo = NoteRow.all().filter("id", (long) toList).get();
 
 		Note movedNote = Note.all().filter("id", (long) noteId).get();
@@ -125,7 +129,7 @@ public class Application extends Controller {
 	private static int findLastPos(NoteRow noteRow) {
 		Note note = Note.all().filter("noteRow", noteRow).order("-positionInRow").get();
 		
-		System.out.println("******note: " + note.getTitle());
+		System.out.println("******note: " + note.getPositionInRow());
 		
 		if (note == null || note.positionInRow == -1)
 			return -1;

@@ -37,7 +37,7 @@ public class Note extends Model {
     }
 	
 	public static List<Note> findByNoteRow(NoteRow noteRow) {
-		return all().filter("noteRow", noteRow).fetch();
+		return all().filter("noteRow", noteRow).order("positionInRow").fetch();
 	}
 	
 	public static JsonNote editNote(Long id, String newTitle) {
