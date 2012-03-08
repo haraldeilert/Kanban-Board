@@ -35,24 +35,29 @@ public class Application extends Controller {
 		NoteRow noteRow = new NoteRow(board, "ToDo", 0);
 		noteRow.insert();
 		
-		NoteRow noteRow1 = new NoteRow(board, "Doing", 0);
+		NoteRow noteRow1 = new NoteRow(board, "Doing", 1);
 		noteRow1.insert();
 		
-		NoteRow noteRow2 = new NoteRow(board, "Done", 0);
+		NoteRow noteRow2 = new NoteRow(board, "Test", 2);
 		noteRow2.insert();
+		
+		NoteRow noteRow3 = new NoteRow(board, "Done", 3);
+		noteRow3.insert();
 		
 		Note note = new Note(noteRow, "todo note", "dsf", 0);
 		note.insert();
 		Note note2 = new Note(noteRow1, "doing note", "dsf", 0);
 		note2.insert();
-		Note note3 = new Note(noteRow2, "done note", "dsf", 0);
+		Note note3 = new Note(noteRow2, "test note", "dsf", 0);
 		note3.insert();
+		Note note4 = new Note(noteRow2, "done note", "dsf", 0);
+		note4.insert();
 	}
 
 	public static void addNewNote(Long id, String title, String text,
 			String identify) {
 		NoteRow noteRow = NoteRow.all().filter("id", id).get();
-		int pos = (findLastPos(id) + 1);
+		int pos = (findLastPos(noteRow) + 1);
 
 		JsonNote jsonNote = noteRow.addNote(title, text, pos);
 		try {
@@ -111,7 +116,7 @@ public class Application extends Controller {
 		// Rearrange positions in the From List
 		NoteRow noteRowFrom = NoteRow.all().filter("id", (long) fromList).get();
 		
-		List<Note> notes = Note.all().filter("notes", noteRowFrom).fetch();
+		List<Note> notes = Note.all().filter("noteRow", noteRowFrom).fetch();
 		
 		for (Note note : notes) {
 			if (note.positionInRow > startUiIndex) {
@@ -121,7 +126,7 @@ public class Application extends Controller {
 		}
 
 		// Rearrange positions in the From List
-		List<Note> notesTo = Note.all().filter("notes", noteRowTo).fetch();
+		List<Note> notesTo = Note.all().filter("noteRow", noteRowTo).fetch();
 		
 		for (Note note : notesTo) {
 			if (note.getId() != (long) noteId
@@ -136,9 +141,11 @@ public class Application extends Controller {
 				+ toList + ";" + fromList + ";" + stopUiIndex);
 	}
 
-	private static int findLastPos(Long noteRowId) {
-		Note note = Note.all().filter("noteRow.id", noteRowId).order("positionInRow-").get();
-
+	private static int findLastPos(NoteRow noteRow) {
+		Note note = Note.all().filter("noteRow", noteRow).order("-positionInRow").get();
+		
+		System.out.println("******note: " + note.getTitle());
+		
 		if (note == null || note.positionInRow == -1)
 			return -1;
 		else
