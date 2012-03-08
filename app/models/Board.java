@@ -19,8 +19,8 @@ public class Board extends Model {
 	@Column("title")
 	public String title;
 	
-	@Filter("note_row")
-	public Query<NoteRow> noteRow;
+	@Filter("board")
+    public Query<NoteRow> noteRow;
 	
 	public Board(String title) {
 		this.title = title;

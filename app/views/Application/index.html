@@ -235,7 +235,7 @@ input:focus {
 		<!-- Loop ends here -->
 	</div>
 
-<div style="visible: none" id="identifyStr"></div>
+
 
 	<hr>
 	<!-- /container -->
@@ -249,78 +249,12 @@ input:focus {
 	function borderEffectRemove(id) {
 		document.getElementById(id).setAttribute("class", "note");
 	}
-	
-	// Create a socket   
-	var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket;
-    var socket = new WS('@@{Application.WebSocket.listen}')
-	
-		// Message received on the socket
-		socket.onmessage = function(event) {
-			var data = event.data.split(";");
-			var type = data[0];
-			var identify = data[1];
-			
-			if(document.getElementById("identifyStr").value != identify) {
-				create("container-bottom", { });
-			}	
-			
-			if(type == "delete") {
-				var noteId = data[2];
-				$('li').remove('#'+noteId);
-			
-			} else if(type == "add") {
-				var noteRowId = data[2];
-				var title = data[3];
-				var noteID = data[4];
-				var positionInRow = data[5];
-				var tmp2 = ".posRow" + noteRowId;
 
-				appendLINode($(tmp2), noteID, title, positionInRow);
-			
-			} else if(type == "update" && document.getElementById("identifyStr").value != identify) {
-				var noteId = data[2];
-				var title = data[3];
-				
-				$('a.edit'+noteId).replaceWith(title)
-				
-			} else if(type == "moved") {
-				var id = data[2];
-				var title = data[3];
-				var to = data[4];
-				var from = data[5];
-				var positionInRow = data[6];
-				
-				//TODO: Refactor and optimize the code below
-				
-				if(document.getElementById("identifyStr").value != identify) {//RECEIVER
-					$('li').remove('#'+id);
-					
-					appendLINode($(".posRow" + to), id, title, positionInRow);
-					//Iterate over list and change positionValue
-					$("ul#sortable"+to).children('li').each(function(newPos, elm) {  
-						  if(elm.getAttribute("positionInRow") >= positionInRow && elm.getAttribute("id") != id) {
-						     var newPosTmp = parseInt(elm.getAttribute("positionInRow")) + 1;
-						 	 elm.setAttribute("positionInRow", newPosTmp);
-						  }
-					});
-					//Sort the new list that received a new element
-					$("ul#sortable" + to+">li").tsort({order:'asc',attr:'positionInRow'});
-					
-					var incVal = 0;
-					//A list have lost an element lets give it new position values
-					if(from != to) {
-						$("ul#sortable"+from).children('li').each(function(newPos, elm) {  
-							  elm.setAttribute("positionInRow", incVal++);
-						});
-					}
-				} 	
-			}
-		}
-    
 		function deleteMe(noteId) {
 			$.post('@{deleteNote()}', {
-				noteId : noteId,
-				identify: document.getElementById("identifyStr").value
+				noteId : noteId
+			}, function() {
+				$('li').remove('#'+noteId);
 			})
 		}
 		
@@ -332,8 +266,7 @@ input:focus {
 			
 			$.post('@{editNote()}', {
 				noteId: noteId,
-				newTitle: newTitlePrompt,
-				identify: document.getElementById("identifyStr").value
+				newTitle: newTitlePrompt
 				}, function(task) {
 					if(task.title != null && task.title != '')
 						$('a.edit'+noteId).replaceWith(task.title)
@@ -356,8 +289,15 @@ input:focus {
 				startUiIndex : startUiIndex,
 				stopUiIndex : stopUiIndex,
 				fromList : fromList,
-				toList : toList,
-				identify: document.getElementById("identifyStr").value
+				toList : toList
+			}, function() {
+				var incVal = 0;
+					//A list have lost an element lets give it new position values
+					if(from != to) {
+						$("ul#sortable"+fromList).children('li').each(function(newPos, elm) {  
+							  elm.setAttribute("positionInRow", incVal++);
+						});
+					}
 			})
 		}
 
@@ -381,16 +321,19 @@ input:focus {
 			$.post('@{addNewNote()}', {
 				id : str,
 				title : document.getElementById(tmp).value,
-				text : "",
-				identify: document.getElementById("identifyStr").value
-			}, function(jsonNote) {}, 'json')
+				text : ""
+			}, function(jsonNote) {
+				appendLINode($(tmp2), jsonNote.id, jsonNote.title, jsonNote.positionInRow);
+			
+			}, 'json')
 			document.getElementById(tmp).value = '';
 			document.getElementById(tmp3).style.display = "none";
 			document.getElementById(tmp4).style.display = "inline";
+			
+			
 		}
 		
-		var newDate = new Date;
-		document.getElementById("identifyStr").value = newDate.getTime();
+		
 		
 	</script>
 

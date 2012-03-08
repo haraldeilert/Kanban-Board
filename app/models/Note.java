@@ -22,8 +22,7 @@ public class Note extends Model {
 	public String text;
 	@Column("position_in_row")
 	public int positionInRow;
-
-	@Filter("note_rows")
+	
 	public NoteRow noteRow;
 	
 	public Note(NoteRow noteRow, String title, String text, int postionInRow) {

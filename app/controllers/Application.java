@@ -6,9 +6,7 @@ import models.Board;
 import models.JsonNote;
 import models.Note;
 import models.NoteRow;
-import models.StatefulModel;
 import play.mvc.Controller;
-import play.mvc.WebSocketController;
 
 public class Application extends Controller {
 
@@ -50,51 +48,38 @@ public class Application extends Controller {
 		note2.insert();
 		Note note3 = new Note(noteRow2, "test note", "dsf", 0);
 		note3.insert();
-		Note note4 = new Note(noteRow2, "done note", "dsf", 0);
+		Note note4 = new Note(noteRow3, "done note", "dsf", 0);
 		note4.insert();
 	}
 
-	public static void addNewNote(Long id, String title, String text,
-			String identify) {
+	public static void addNewNote(Long id, String title, String text) {
 		NoteRow noteRow = NoteRow.all().filter("id", id).get();
 		int pos = (findLastPos(noteRow) + 1);
 
 		JsonNote jsonNote = noteRow.addNote(title, text, pos);
-		try {
-			// TODO: Create some object here instead
-			StatefulModel.instance.event.publish("add;" + identify + ";"
-					+ id.toString() + ";" + title + ";" + jsonNote.id + ";"
-					+ jsonNote.positionInRow);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		renderJSON(jsonNote);
 	}
 
-	public static void deleteNote(Long noteId, String identify) {
+	public static void deleteNote(Long noteId) {
 
 		try {
 			Note note = Note.all().filter("id", noteId).get();
 			note.delete();
 
-			StatefulModel.instance.event.publish("delete;" + identify + ";"
-					+ noteId.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public static void editNote(Long noteId, String newTitle, String identify) {
+	public static void editNote(Long noteId, String newTitle) {
 		JsonNote jsonNote = null;
 		System.out.println("*******newTitle: " + newTitle);
 		if (newTitle != null && !"".equals(newTitle)) {
 			try {
 				jsonNote = Note.editNote(noteId, newTitle);
-				StatefulModel.instance.event.publish("update;" + identify + ";"
-						+ noteId + ";" + newTitle);
-
+			
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -104,7 +89,7 @@ public class Application extends Controller {
 	}
 
 	public static void updateNotePosition(int noteId, int startUiIndex,
-			int stopUiIndex, int fromList, int toList, String identify) {
+			int stopUiIndex, int fromList, int toList) {
 
 		NoteRow noteRowTo = NoteRow.all().filter("id", (long) toList).get();
 
@@ -134,11 +119,7 @@ public class Application extends Controller {
 				note.positionInRow = note.positionInRow + 1;
 				note.save();
 			}
-		}
-
-		StatefulModel.instance.event.publish("moved;" + identify + ";"
-				+ movedNote.id.toString() + ";" + movedNote.title + ";"
-				+ toList + ";" + fromList + ";" + stopUiIndex);
+		}	
 	}
 
 	private static int findLastPos(NoteRow noteRow) {
@@ -155,7 +136,7 @@ public class Application extends Controller {
 	private static String createCSSNameStr(List<NoteRow> noterows, String ext) {
 		String tmp = "";
 		for (NoteRow noteRow : noterows) {
-			tmp += "#sortable" + String.valueOf(noteRow.getId().intValue())
+			tmp += "#sortable" + java.lang.String.valueOf(noteRow.getId().intValue())
 					+ ext + ",";
 
 		}
@@ -163,20 +144,5 @@ public class Application extends Controller {
 			return tmp.substring(0, tmp.length() - 1);
 		else
 			return tmp;
-	}
-
-	public static class WebSocket extends WebSocketController {
-		public static void listen() {
-			while (inbound.isOpen()) {
-				try {
-					String event = await(StatefulModel.instance.event
-							.nextEvent());
-					outbound.send(event);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
 	}
 }

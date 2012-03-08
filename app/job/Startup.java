@@ -1,6 +1,5 @@
 package job;
 
-import models.StatefulModel;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 
