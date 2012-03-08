@@ -293,7 +293,7 @@ input:focus {
 			}, function() {
 				var incVal = 0;
 					//A list have lost an element lets give it new position values
-					if(from != to) {
+					if(fromList != toList) {
 						$("ul#sortable"+fromList).children('li').each(function(newPos, elm) {  
 							  elm.setAttribute("positionInRow", incVal++);
 						});
