@@ -6,8 +6,16 @@ import models.JsonNote;
 import models.Note;
 import models.NoteRow;
 import models.StatefulModel;
+import play.libs.F;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.WebSocketController;
+
+import static play.libs.F.Matcher.ClassOf;
+import static play.libs.F.Matcher.Equals;
+import static play.libs.F.Matcher.String;
+import static play.mvc.Http.WebSocketEvent.SocketClosed;
+import static play.mvc.Http.WebSocketEvent.TextFrame;
 
 public class Application extends Controller {
 
@@ -115,7 +123,7 @@ public class Application extends Controller {
 	private static String createCSSNameStr(List<NoteRow> noterows, String ext) {
 		String tmp = "";
 		for (NoteRow noteRow : noterows) {
-			tmp += "#sortable" + String.valueOf(noteRow.getId().intValue())
+			tmp += "#sortable" + java.lang.String.valueOf(noteRow.getId().intValue())
 					+ ext + ",";
 
 		}
@@ -126,9 +134,34 @@ public class Application extends Controller {
 		public static void listen() {
 			while (inbound.isOpen()) {
 				try {
-					String event = await(StatefulModel.instance.event
-							.nextEvent());
-					outbound.send(event);
+					
+					 System.out.println("Waiting for next event...");
+	                    F.Either<Http.WebSocketEvent,String> e = await(F.Promise.waitEither(
+	                            inbound.nextEvent(),
+	                            StatefulModel.instance.event.nextEvent()
+	                    ));
+
+	                    for(String msg: TextFrame.and(Equals("close")).match(e._1)) {
+	                        System.out.println("socket close requested");
+	                        disconnect();
+	                    }
+
+	                    // Case: TextEvent received on the socket
+	                    for(String event: TextFrame.match(e._1)) {
+	                        System.out.println("socket outbound send:"+ event);
+	                        StatefulModel.instance.event.publish(event);
+	                    }
+
+	                    for(String event: ClassOf(String.class).match(e._2)) {
+	                        System.out.println("Publishing selection %s to Outbound Subscribers "+ event);
+	                        outbound.send(event);
+	                    }
+
+	                    // Case: The socket has been closed
+	                    for(Http.WebSocketClose closed: SocketClosed.match(e._1)) {
+	                        System.out.println("socket closed by "+ session.getId());
+	                        disconnect();
+	                    }	
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
