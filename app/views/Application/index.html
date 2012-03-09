@@ -4,38 +4,6 @@
 <style>
 	${cssStr} { list-style-type: none; margin: 5px 5px 5px 5px; padding: 0; float: auto; }
 	${cssStr2} { margin: 5px 5px 5px 5px; padding: 25px; font-size: 1.2em; float: auto; margin-right: auto; margin-left: auto; }
-	
-.main-area{
-   background-color: #E3E3E3;
-   border-radius: 6px 6px 6px 6px;
-   text-align: center;
-   align: center;
- }
- 
- .note{
-    background: repeat-x scroll 50% 50% #FFFFFF;
-    border-radius: 6px 6px 6px 6px;
-    color: #1C94C4;
-    font-weight: bold;
-    outline: medium none;
- }
- 
- .hero-unit-myversion {
-    background-color: #5E768D;
-    border-radius: 6px 6px 6px 6px;
-    margin-bottom: 30px;
-    padding: 60px;
-    float: auto; 
-    margin-right: 30px; 
-    margin-left: auto;
-    
-}
-
-.myDiver{
-     min-height:50px;
-     height:auto !important;
-     height:50px; 
-}
 
 input {
 	height: 45px; padding: 20px 20px 0px 20px; margin: 0px 0px 0px 0px; 
@@ -54,96 +22,7 @@ input:focus {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(20%,#ffffff)); /* webkit */
 	float: auto; margin-right: auto; margin-left: auto;
 }
-
-.placeHolderBG {
- 	background: repeat-x scroll 50% 50% #D3D3D3;
- 	border-radius: 6px 6px 6px 6px;
- 	border: 1px dotted black;
-}
-
-.uiEffects {
-  -webkit-box-shadow:#333333 0 4px 6px;
-  border-radius: 6px 6px 6px 6px;
-  background-attachment:initial;
-  background-clip:initial;
-  background-color:initial;
-  background-image:-webkit-linear-gradient(top, #FFFFFF 0%, #FFFFFF 100%);
-  background-origin:initial;
-  background-position:initial initial;
-  background-repeat:initial initial;
-  border-top-color:#CCCCCC;
-  border-top-style:solid;
-  border-top-width:1px;
-  box-shadow:#333333 0 4px 6px;
-  color:#000000;
-  z-index:50001;
-}
-
-.topCorner{
- 	display:block;
-    position:relative;
- 	top:-25px;
- 	left:20px;
-}
-
-.closeMe{
-  color:#000000;
-  float:right;
-  font-size:15px;
-  font-weight:bold;
-  line-height:15px;
-  opacity:0.4;
-  text-shadow:#FFFFFF 0 1px 0;
-}
-</style>
-
-	<script>
-	
-	$(function() {
-		$('a[rel=popover]').popover({
-			html:true,
-       
-		}).click(function(e) {
-			$(this).popover('hide');
-		})
-	})
-	
-	function appendLINode(node, noteId, title, pos) {
-		node.append('<li id="'+noteId+'" positionInRow="'+pos+'" class="note"><a class="topCorner" id="blob" onclick="javascript:deleteMe('+noteId+')" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#"><span class="closeMe">x</span></a><a class="edit'+noteId+'" id="blob1" rel="popover" onclick="javascript:editMe('+noteId+', '+title+')" title="Edit Note" data-content="Click here to edit the note!" href="#">'+title+'</a></li>') 
-		$("#blob").popover({offset: 10});
-		$("#blob1").popover({offset: 10});
-	}
-	
-	function create( template, vars, opts ){
-		return $container.notify("create");
-	}
-			
-	$(function() {
-		
-		$container = $("#container-bottom").notify({ stack:'above' });
-		
-		$("${cssStr}").sortable({
-	        connectWith: '.connectedSortable',
-	        placeholder: "placeHolderBG",
-	        start: function(event, ui) {
-	        	ui.placeholder.height(ui.item.height());
-	            item = ui.item;
-	            newList = oldList = ui.item.parent();
-	            startIndex =  ui.item.index();
-	        },
-	        stop: function(event, ui) { 
-	        	var noteId = item.attr('id');
-	        	updateNotePos(noteId, startIndex, ui.item.index(), oldList.attr('cleanid'), newList.attr('cleanid'));
-	        },
-	        change: function(event, ui) {  
-	            if(ui.sender) newList = ui.placeholder.parent();
-	        }   
-		});
-		$("${cssStr}").disableSelection();
-	});
-	
-	</script>
-	
+</style>	
 <div id="myModal" class="modal hide fade">
 	<div class="modal-header">
 		<a class="close" data-dismiss="modal">&times;</a>
@@ -221,8 +100,8 @@ input:focus {
 					
 				</ul>
 							<div id="addToggle${noterow.id}" style="display: none" class="input">
-								<input type="text" class="note" name="addnote${noterow.id}"
-									id="addnote${noterow.id}" class="xlarge">
+								<input type="text" class="xlarge note" name="addnote${noterow.id}"
+									id="addnote${noterow.id}">
 									<br/>
 									<input type="button" class="btn" id="button${noterow.id}" onClick="javascript:sendIt('${noterow.id}')" value="Add">
 					
@@ -240,7 +119,58 @@ input:focus {
 	<hr>
 	<!-- /container -->
 
+<!--- second container -  bottom notifications --->
+	<div id="container-bottom" style="top:auto; left:0; bottom:0; margin:0 0 10px 10px;display: none">
+		<div>
+			<div style="float:left;margin:0 10px 10px 10px"><img src="@{'/public/images/info-icon.png'}" alt="info" /></div>
+			<p>INFO!</p>
+			<p>Another user is currently updating the board!</p>
+		</div>
+	</div>
+	
 	<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$('a[rel=popover]').popover({
+			html:true,
+       
+		}).click(function(e) {
+			$(this).popover('hide');
+		})
+	})
+	
+	function appendLINode(node, noteId, title, pos) {
+		node.append('<li id="'+noteId+'" positionInRow="'+pos+'" class="note"><a class="topCorner" id="blob" onclick="javascript:deleteMe('+noteId+')" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#"><span class="closeMe">x</span></a><a class="edit'+noteId+'" id="blob1" rel="popover" onclick="javascript:editMe('+noteId+', '+title+')" title="Edit Note" data-content="Click here to edit the note!" href="#">'+title+'</a></li>') 
+		$("#blob").popover({offset: 10});
+		$("#blob1").popover({offset: 10});
+	}
+	
+	function create( template, vars, opts ){
+		return $container.notify("create");
+	}
+			
+	$(function() {
+		
+		$container = $("#container-bottom").notify({ stack:'above' });
+		
+		$("${cssStr}").sortable({
+	        connectWith: '.connectedSortable',
+	        placeholder: "placeHolderBG",
+	        start: function(event, ui) {
+	        	ui.placeholder.height(ui.item.height());
+	            item = ui.item;
+	            newList = oldList = ui.item.parent();
+	            startIndex =  ui.item.index();
+	        },
+	        stop: function(event, ui) { 
+	        	var noteId = item.attr('id');
+	        	updateNotePos(noteId, startIndex, ui.item.index(), oldList.attr('cleanid'), newList.attr('cleanid'));
+	        },
+	        change: function(event, ui) {  
+	            if(ui.sender) newList = ui.placeholder.parent();
+	        }   
+		});
+		$("${cssStr}").disableSelection();
+	});
 	
 	function borderEffectAdd(id) {
 		document.getElementById(id).setAttribute("class", "uiEffects");
@@ -393,12 +323,3 @@ input:focus {
 		document.getElementById("identifyStr").value = newDate.getTime();
 		
 	</script>
-
-<!--- second container -  bottom notifications --->
-	<div id="container-bottom" style="top:auto; left:0; bottom:0; margin:0 0 10px 10px;display: none">
-		<div>
-			<div style="float:left;margin:0 10px 10px 10px"><img src="@{'/public/images/info-icon.png'}" alt="info" /></div>
-			<p>INFO!</p>
-			<p>Another user is currently updating the board!</p>
-		</div>
-	</div>
