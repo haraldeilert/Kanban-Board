@@ -3,12 +3,14 @@
 <html>
     <head>
         <title>#{get 'title' /}</title>
-        <meta charset="${_response_encoding}">
+        <meta charset="utf-8">
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/ui.notify.css'}">
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/bootstrap/css/bootstrap.min.css'}">
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/bootstrap/css/bootstrap-responsive.min.css'}">
-            <style type="text/css">
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">   
+    
+      <style type="text/css">
       body {
         padding-top: 60px;
          padding-left: 20px;
@@ -19,24 +21,23 @@
    
 	<!--Jquery-->
    	<script src="@{'/public/javascripts/libs/jquery-1.7.1.min.js'}" type="text/javascript" charset="utf-8"></script>
-    <script src="/public/javascripts/libs/jquery.ui.core.js"></script>
-	<script src="/public/javascripts/libs/jquery.ui.widget.js"></script>
-	<script src="/public/javascripts/libs/jquery.ui.mouse.js"></script>
-	<script src="/public/javascripts/libs/jquery.ui.sortable.js"></script>
-	<script src="@{'/public/javascripts/libs/jquery.notify.js'}"></script>
+    <script src="@{'/public/javascripts/libs/jquery.ui.core.js'}}" type="text/javascript" charset="utf-8"></script>
+	<script src="@{'/public/javascripts/libs/jquery.ui.widget.js'}" type="text/javascript" charset="utf-8"></script>
+	<script src="@{'/public/javascripts/libs/jquery.ui.mouse.js'}" type="text/javascript" charset="utf-8"></script>
+	<script src="@{'/public/javascripts/libs/jquery.ui.sortable.js'}" type="text/javascript" charset="utf-8"></script>
+	<script src="@{'/public/javascripts/libs/jquery.notify.js'}" type="text/javascript" charset="utf-8"></script>
 
 	<!--Bootstrap-->
-    <script src="@{'/public/javascripts/libs/bootstrap/modal.js'}"></script>
-    <script src="@{'/public/javascripts/libs/bootstrap/tooltip.js'}"></script>
-    <script src="@{'/public/javascripts/libs/bootstrap/popover.js'}"></script>
-    
+    <script src="@{'/public/javascripts/libs/bootstrap/modal.js'}" type="text/javascript" charset="utf-8"></script>
+    <script src="@{'/public/javascripts/libs/bootstrap/tooltip.js'}" type="text/javascript" charset="utf-8"></script>
+    <script src="@{'/public/javascripts/libs/bootstrap/popover.js'}" type="text/javascript" charset="utf-8"></script>
+     <script src="@{'/public/javascripts/libs/bootstrap/transition.js'}" type="text/javascript" charset="utf-8"></script>
      
 	#{get 'moreScripts' /}
         
     </head>
     <body>
 	<header>
-<!-- The banner is inspired(stolen) from enterLab.dk hire them and make them rich!!-->
 		<div id="demobanner">
 			<div>Demo</div>
 		</div
