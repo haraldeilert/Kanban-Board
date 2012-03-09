@@ -40,3 +40,76 @@
 
     border-top:1px solid #ccc;
 }
+
+.main-area{
+   background-color: #E3E3E3;
+   border-radius: 6px 6px 6px 6px;
+   text-align: center;
+   align: center;
+ }
+ 
+ .note{
+    background: repeat-x scroll 50% 50% #FFFFFF;
+    border-radius: 6px 6px 6px 6px;
+    color: #1C94C4;
+    font-weight: bold;
+    outline: medium none;
+ }
+ 
+ .hero-unit-myversion {
+    background-color: #5E768D;
+    border-radius: 6px 6px 6px 6px;
+    margin-bottom: 30px;
+    padding: 60px;
+    float: auto; 
+    margin-right: 30px; 
+    margin-left: auto;
+    
+}
+
+.myDiver{
+     min-height:50px;
+     height:auto !important;
+     height:50px; 
+}
+
+.placeHolderBG {
+ 	background: repeat-x scroll 50% 50% #D3D3D3;
+ 	border-radius: 6px 6px 6px 6px;
+ 	border: 1px dotted black;
+}
+
+.uiEffects {
+  -webkit-box-shadow:#333333 0 4px 6px;
+  border-radius: 6px 6px 6px 6px;
+  background-attachment:initial;
+  background-clip:initial;
+  background-color:initial;
+  background-image:-webkit-linear-gradient(top, #FFFFFF 0%, #FFFFFF 100%);
+  background-origin:initial;
+  background-position:initial initial;
+  background-repeat:initial initial;
+  border-top-color:#CCCCCC;
+  border-top-style:solid;
+  border-top-width:1px;
+  box-shadow:#333333 0 4px 6px;
+  color:#000000;
+  z-index:50001;
+}
+
+.topCorner{
+ 	display:block;
+    position:relative;
+ 	top:-25px;
+ 	left:20px;
+}
+
+.closeMe{
+  color:#000000;
+  float:right;
+  font-size:15px;
+  font-weight:bold;
+  line-height:15px;
+  opacity:0.4;
+  text-shadow:#FFFFFF 0 1px 0;
+}
