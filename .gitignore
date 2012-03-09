@@ -16,7 +16,8 @@ eclipse/
 /test-result
 /logs
 /precompiled
-/war
+/war/WEB-INF/appengine-generated
+/war/lib
 /db
 
 # Packages #
