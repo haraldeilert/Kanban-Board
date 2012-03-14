@@ -3,13 +3,17 @@
 # ~~~~
 
 # Home page
-GET     /                                       Application.index
+GET     /			                            Application.index
 WS      /socket                                 Application.WebSocket.listen
+
+# Import Secure routes
+*       /                                       module:secure
 
 *	 	/admin	 								module:crud
 GET 	/admin								    Boards.list
 GET 	/admin									NoteRows.list
 GET 	/admin								    Notes.list
+GET 	/admin								    Users.list
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

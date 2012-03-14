@@ -4,6 +4,7 @@ import play.*;
 import play.db.jpa.*;
 
 import javax.persistence.*;
+
 import java.util.*;
 
 @Entity
@@ -13,10 +14,14 @@ public class Board extends Model {
 	
 	@OneToMany(mappedBy="board", cascade=CascadeType.ALL)
 	public List<NoteRow> noteRows;
-
-	public Board(String title) {
+	
+	@ManyToOne
+	public User user;
+	
+	public Board(String title, User admin) {
 		this.noteRows = new ArrayList<NoteRow>();
 		this.title = title;
+		this.user = admin;
 	}
 	
 	public Board addNoteRow(String title, int position) {

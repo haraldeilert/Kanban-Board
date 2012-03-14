@@ -1,17 +1,19 @@
 package models;
 
-import play.*;
-import play.db.jpa.*;
+import javax.persistence.Entity;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
-import javax.persistence.*;
-
-import java.util.*;
+import play.data.validation.MaxSize;
+import play.db.jpa.Model;
 
 @Entity
 public class Note extends Model {
 
 	public String title;
-	public String text;
+	@Lob
+    @MaxSize(10000)
+    public String text;
 	public int positionInRow;
 
 	@ManyToOne

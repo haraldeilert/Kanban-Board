@@ -2,6 +2,17 @@
 
 Board(mytestboard):
     title:          MyTestBoard
+   
+User(myadmin):
+    email: harald.eilert@gmail.com
+    passwordHash: test
+    otherBoards: -mytestboard
+    
+User(myuser):
+    email: harald.eilert@avegagroup.se
+    passwordHash: test
+    otherBoards: -mytestboard
+    
     
 NoteRow(todo):
     board:      mytestboard
