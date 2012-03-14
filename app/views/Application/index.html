@@ -93,7 +93,7 @@ input:focus {
 				
 					#{list items:noterow.notes, as:'note'}
 						<li onmouseover="javascript:borderEffectAdd(${note.id})" onmouseout="javascript:borderEffectRemove(${note.id})" id="${note.id}" positionInRow="${note.positionInRow}" class="note">
-						<div class="topCorner"><a onclick="javascript:deleteMe(${note.id})" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#">
+						<div class="topCorner"><a id="del${note.id}" onclick="javascript:deleteMe(${note.id})" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#">
 						<span class="closeMe"/>x</a></div>
 						<a class="edit${note.id}" rel="popover" onclick="javascript:editMe(${note.id}, '${note.title}')" title="Edit Note" data-content="Click here to edit the note!" href="#">${note.title}</a></li> 
 					#{/list}
@@ -139,9 +139,13 @@ input:focus {
 	})
 	
 	function appendLINode(node, noteId, title, pos) {
-		node.append('<li id="'+noteId+'" positionInRow="'+pos+'" class="note"><a class="topCorner" id="blob" onclick="javascript:deleteMe('+noteId+')" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#"><span class="closeMe">x</span></a><a class="edit'+noteId+'" id="blob1" rel="popover" onclick="javascript:editMe('+noteId+', '+title+')" title="Edit Note" data-content="Click here to edit the note!" href="#">'+title+'</a></li>') 
-		$("#blob").popover({offset: 10});
-		$("#blob1").popover({offset: 10});
+		node.append('<li onmouseover="javascript:borderEffectAdd('+noteId+')" onmouseout="javascript:borderEffectRemove('+noteId+')" id="'+noteId+'" positionInRow="'+pos+'" class="note"><a id="del'+noteId+'" class="topCorner" onclick="javascript:deleteMe('+noteId+')" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#"><span class="closeMe">x</span></a><a class="edit'+noteId+'" id="blob1" rel="popover" onclick="javascript:editMe('+noteId+', '+title+')" title="Edit Note" data-content="Click here to edit the note!" href="#">'+title+'</a></li>') 
+		$("#del"+noteId).popover({offset: 10}).click(function(e) {
+			$(this).popover('hide');
+		});
+		$(".edit"+noteId).popover({offset: 10}).click(function(e) {
+			$(this).popover('hide');
+		});
 	}
 	
 	function create( template, vars, opts ){
@@ -186,6 +190,7 @@ input:focus {
 			identify: document.getElementById("identifyStr").value
 		})
 		
+		$('#del'+noteId).popover('hide');
 		$('li').remove('#'+noteId);
 	}
 	
