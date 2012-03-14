@@ -11,7 +11,7 @@ public class BasicTest extends UnitTest {
 	@Test
 	public void createAndRetrieveBoard() {
 	    // Create a new board and save it
-	    new Board(MY_TEST_BOARD).save();
+	    //new Board(MY_TEST_BOARD).save();
 	    
 	    // Retrieve the board 
 	    Board board = Board.find("byTitle", MY_TEST_BOARD).first();
@@ -25,9 +25,9 @@ public class BasicTest extends UnitTest {
 	@Test
 	public void createAndRetrieveNoteRow() {
 	    // Create a new board and save it
-	    Board board = new Board(MY_TEST_BOARD).save();
+	    //Board board = new Board(MY_TEST_BOARD).save();
 	    
-	    board.addNoteRow(MY_TEST_NOTE_ROW, 1);
+	    //board.addNoteRow(MY_TEST_NOTE_ROW, 1);
 	    
 	    NoteRow noteRow = NoteRow.find("byTitle", MY_TEST_NOTE_ROW).first();
 	    
@@ -40,9 +40,9 @@ public class BasicTest extends UnitTest {
 	@Test
 	public void createAndRetrieveNote() {
 	    // Create a new board and save it
-	    Board board = new Board(MY_TEST_BOARD).save();
+	    //Board board = new Board(MY_TEST_BOARD).save();
 	    
-	    board.addNoteRow(MY_TEST_NOTE_ROW, 1);
+	    //board.addNoteRow(MY_TEST_NOTE_ROW, 1);
 	    
 	    NoteRow noteRow = NoteRow.find("byTitle", MY_TEST_NOTE_ROW).first();
 	    

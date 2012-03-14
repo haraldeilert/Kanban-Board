@@ -253,21 +253,21 @@ input:focus {
 		var tmp3 = "addToggle" + str;
 		var tmp4 = "addNoteToggle" + str;
 		
-		$.post('@{addNewNote()}', {
-			id : str,
-			title : document.getElementById(tmp).value,
-			text : "",
-			identify: document.getElementById("identifyStr").value
-		}, function(jsonNote) {
-			appendLINode($(tmp2), jsonNote.id, jsonNote.title, jsonNote.positionInRow);
-			}, 'json')
-		
-		
-		
-		
-		document.getElementById(tmp).value = '';
-		document.getElementById(tmp3).style.display = "none";
-		document.getElementById(tmp4).style.display = "inline";
+		if(document.getElementById(tmp).value != '') {
+			$.post('@{addNewNote()}', {
+				id : str,
+				title : document.getElementById(tmp).value,
+				text : "",
+				identify: document.getElementById("identifyStr").value
+			}, function(jsonNote) {
+				appendLINode($(tmp2), jsonNote.id, jsonNote.title, jsonNote.positionInRow);
+				}, 'json')
+			
+			
+			document.getElementById(tmp).value = '';
+			document.getElementById(tmp3).style.display = "none";
+			document.getElementById(tmp4).style.display = "inline";
+		}
 	}
 	
 	var newDate = new Date;
