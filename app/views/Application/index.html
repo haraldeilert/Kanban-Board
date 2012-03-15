@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
+#{set title:'Digital Kanban Board' /}
 
 <style>
 	${cssStr} { list-style-type: none; margin: 5px 5px 5px 5px; padding: 0; float: auto; }
@@ -22,39 +22,46 @@ input:focus {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(20%,#ffffff)); /* webkit */
 	float: auto; margin-right: auto; margin-left: auto;
 }
+
+.about {
+	  color:inherit;
+	  font-size:18px;
+	  font-weight:200;
+	  line-height:27px;
+	  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+	
+	}
 </style>	
+<div id="myWhoAmI" class="modal hide fade">
+<div class="modal-header">
+	<a class="close" data-dismiss="modal">&times;</a>
+	<h3>Harald Eilert<a href="http://www.linkedin.com/in/haraldeilert" target="_blank"><img src="@{'/public/images/linkedin.png'}"/></a></h3>
+	I live in Malm&ouml; a city in the south of Sweden with my wife and two daughters. Work as a programmer mainly focusing on Java and the web.
+	Just came back from 10 months of parental leave hence the eager to catch up on new technology!
+	
+</div>
+<div class="modal-body about">
+	
+		
+</div>
+</div>
+
 <div id="myModal" class="modal hide fade">
 	<div class="modal-header">
 		<a class="close" data-dismiss="modal">&times;</a>
 		<h3>About</h3>
 	</div>
-	<div class="modal-body">
+	<div class="modal-body about">
 		
-		<p>Exempel p&aring; vad man kan &aring;stadkomma med HTML5, JQuery, BootStrap, Heroku och Play Framework.</p>
-		<ul class="thumbnails">
-	 
-        <li class="span2">
-          <a href="#" class="thumbnail">
-            <img src="@{'/public/images/play_logo.png'}" alt="">
-          </a>
-        </li>
-        <li class="span2">
-          <a href="#" class="thumbnail">
-            <img src="@{'/public/images/jquery_logo.png'}" alt="">
-          </a>
-        </li>
-        
-       <li class="span2">
-          <a href="#" class="thumbnail">
-            <img src="@{'/public/images/heroku_logo.png'}" alt="">
-          </a>
-        </li>
-        <li class="span2">
-          <a href="#" class="thumbnail">
-            <img src="@{'/public/images/html5_logo.png'}" alt="">
-          </a>
-        </li>
-      </ul>
+		A demo of a Kanban Board where you can move, edit and delete Notes. The cool thing is that all changes you make are updated in real time to other clients, try it by using two browser windows!
+		<br/><br/>At first I built this to test <a href="http://www.playframework.org/" target="_blank">Play</a> framework 1.2.4(Yes I know 2.0 is just launched but I didn't feel like playing around with a beta version at the time.) 
+		I might rewrite it to 2.0 soon if I get some time!<br/><br/>
+		After seeing <a href="http://www.enterlab.dk" target="_blank">Enterlabs</a> new website I found <a href="http://twitter.github.com/bootstrap/" target="_blank">Bootstrap</a> which helped me get into html5 quickly, the demo banner is ripped from Enterlab(sorry guys).
+		<a href="http://jquery.com/" target="_blank">Jquery</a> was a blessing as always. I really want to use <a href="http://coffeescript.org/" target="_blank">Coffescript</a> to clean up the messy jquery/javascript code in the future..<br/><br/>
+		To implement websockets was really easy until I wanted to move the code to a cloud service, seems like there isn't a cloud service that supports websockets at the moment. 
+		Then I found out about <a href="http://pusher.com/">Pusher</a>(which is a great danish movie as well) and that was even easier and worked on <a href="http://www.heroku.com/" target="_blank">Heroku</a> cloud service!
+		Should mention that the sandbox version of Pusher that I use only supports 20 connections.
+		
 	</div>
 </div>
 
@@ -70,19 +77,17 @@ input:focus {
           <div class="nav-collapse">
             <ul class="nav">
               <li><a data-toggle="modal" href="#myModal">About</a></li>
+              <li><a data-toggle="modal" href="#myWhoAmI">WhoAmI</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-   <!--   <div class="container">-->
    <div>
 
-	<!-- Main hero unit for a primary marketing message or call to action -->
 	<div class="hero-unit-myversion">
-	<!-- set the container hidden to avoid a flash of unstyled content when the page first loads -->
-
+	
 		<div class="row-fluid">
 			<!-- Loop starts here -->
 			#{list items:noterows, as:'noterow'}
