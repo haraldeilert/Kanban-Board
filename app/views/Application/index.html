@@ -284,10 +284,9 @@ input:focus {
    
 		// Message received on the pusher channel
     	channel.bind('kanbanevent', function(data) {
-    	alert(data);
-    	var data = event.data.split(";");
-		var type = data[0];
-		var identify = data[1];
+    	var dataTmp = data.split(";");
+		var type = dataTmp[0];
+		var identify = dataTmp[1];
 		
     	// On call if client is a receiver in websocket listen
     	if(document.getElementById("identifyStr").value != identify) {
@@ -295,30 +294,30 @@ input:focus {
 			create("container-bottom", { });
 				
 			if(type == "delete") {
-				var noteId = data[2];
+				var noteId = dataTmp[2];
 				$('li').remove('#'+noteId);
 			
 			} else if(type == "add") {
-				var noteRowId = data[2];
-				var title = data[3];
-				var noteID = data[4];
-				var positionInRow = data[5];
+				var noteRowId = dataTmp[2];
+				var title = dataTmp[3];
+				var noteID = dataTmp[4];
+				var positionInRow = dataTmp[5];
 				var tmp2 = ".posRow" + noteRowId;
 
 				appendLINode($(tmp2), noteID, title, positionInRow);
 			
 			} else if(type == "update") {
-				var noteId = data[2];
-				var title = data[3];
+				var noteId = dataTmp[2];
+				var title = dataTmp[3];
 				
 				$('a.edit'+noteId).replaceWith(title)
 				
 			} else if(type == "moved") {
-				var id = data[2];
-				var title = data[3];
-				var to = data[4];
-				var from = data[5];
-				var positionInRow = data[6];
+				var id = dataTmp[2];
+				var title = dataTmp[3];
+				var to = dataTmp[4];
+				var from = dataTmp[5];
+				var positionInRow = dataTmp[6];
 				
 				// TODO: Refactor and optimize the code below
 				$('li').remove('#'+id);

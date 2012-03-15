@@ -55,8 +55,9 @@ public class Application extends Controller {
 			Note note = Note.findById(noteId);
 			note.delete();
 
-			StatefulModel.instance.event.publish("delete;" + identify + ";"
+			pusher.trigger("kanbanchannel", "kanbanevent", "delete;" + identify + ";"
 					+ noteId.toString());
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,7 +70,8 @@ public class Application extends Controller {
 		if (newTitle != null && !"".equals(newTitle)) {
 			try {
 				jsonNote = Note.editNote(noteId, newTitle);
-				StatefulModel.instance.event.publish("update;" + identify + ";"
+				
+				pusher.trigger("kanbanchannel", "kanbanevent","update;" + identify + ";"
 						+ noteId + ";" + newTitle);
 
 			} catch (Exception e) {
@@ -110,7 +112,7 @@ public class Application extends Controller {
 			}
 		}
 
-		StatefulModel.instance.event.publish("moved;" + identify + ";"
+		pusher.trigger("kanbanchannel", "kanbanevent", "moved;" + identify + ";"
 				+ movedNote.id.toString() + ";" + movedNote.title + ";"
 				+ toList + ";" + fromList + ";" + stopUiIndex);
 	}
@@ -133,45 +135,5 @@ public class Application extends Controller {
 
 		}
 		return tmp.substring(0, tmp.length() - 1);
-	}
-
-	public static class WebSocket extends WebSocketController {
-		public static void listen() {
-			while (inbound.isOpen()) {
-				try {
-					
-					 System.out.println("Waiting for next event...");
-	                    F.Either<Http.WebSocketEvent,String> e = await(F.Promise.waitEither(
-	                            inbound.nextEvent(),
-	                            StatefulModel.instance.event.nextEvent()
-	                    ));
-
-	                    for(String msg: TextFrame.and(Equals("close")).match(e._1)) {
-	                        System.out.println("socket close requested");
-	                        disconnect();
-	                    }
-
-	                    // Case: TextEvent received on the socket
-	                    for(String event: TextFrame.match(e._1)) {
-	                        System.out.println("socket outbound send:"+ event);
-	                        StatefulModel.instance.event.publish(event);
-	                    }
-
-	                    for(String event: ClassOf(String.class).match(e._2)) {
-	                        System.out.println("Publishing selection %s to Outbound Subscribers "+ event);
-	                        outbound.send(event);
-	                    }
-
-	                    // Case: The socket has been closed
-	                    for(Http.WebSocketClose closed: SocketClosed.match(e._1)) {
-	                        System.out.println("socket closed by "+ session.getId());
-	                        disconnect();
-	                    }	
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
 	}
 }
