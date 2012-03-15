@@ -4,6 +4,6 @@ require:
         - play
         - play -> crud
         - play -> secure
-        
+        - play -> pusher 0.1
         
       

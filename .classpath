@@ -2,11 +2,13 @@
 <classpath>
 	<classpathentry excluding="views/**" kind="src" path="app"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="pusher-0.1"/>
 	<classpathentry kind="src" path="secure"/>
 	<classpathentry kind="src" path="crud"/>
 	
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/framework/play-master-da9bb15.jar" sourcepath="/Users/haraldeilert/Applications/play-1.2.4/framework/src" />
+	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/modules/pusher-0.1/lib/play-pusher.jar"/>
 	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/framework/lib/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/framework/lib/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="/Users/haraldeilert/Applications/play-1.2.4/framework/lib/asm-all-3.3.1.jar"/>

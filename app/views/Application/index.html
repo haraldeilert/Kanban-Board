@@ -278,12 +278,13 @@ input:focus {
 	var newDate = new Date;
 	document.getElementById("identifyStr").value = newDate.getTime();
 	
-	// Create a socket   
-	var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket;
-    var socket = new WS('@@{Application.WebSocket.listen}')
-    
-		// Message received on the socket
-		socket.onmessage = function(event) {
+	// Create a pusher   
+	var pusher = new Pusher('b1c3016f99b90a7db7de');
+    var channel = pusher.subscribe('kanbanchannel');
+   
+		// Message received on the pusher channel
+    	channel.bind('kanbanevent', function(data) {
+    	alert(data);
     	var data = event.data.split(";");
 		var type = data[0];
 		var identify = data[1];
@@ -344,5 +345,5 @@ input:focus {
 					}	
 				}
     		}
-		}
+		});
 	</script>

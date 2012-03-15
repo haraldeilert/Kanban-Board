@@ -1,24 +1,25 @@
 package controllers;
 
-import java.util.List;
+import static play.libs.F.Matcher.ClassOf;
+import static play.libs.F.Matcher.Equals;
+import static play.mvc.Http.WebSocketEvent.SocketClosed;
+import static play.mvc.Http.WebSocketEvent.TextFrame;
 
+import java.util.List;
 import models.JsonNote;
 import models.Note;
 import models.NoteRow;
 import models.StatefulModel;
 import play.libs.F;
+import play.libs.WS.HttpResponse;
+import play.modules.pusher.Pusher;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.WebSocketController;
 
-import static play.libs.F.Matcher.ClassOf;
-import static play.libs.F.Matcher.Equals;
-import static play.libs.F.Matcher.String;
-import static play.mvc.Http.WebSocketEvent.SocketClosed;
-import static play.mvc.Http.WebSocketEvent.TextFrame;
-
 public class Application extends Controller {
-
+	private static Pusher pusher = new Pusher();
+	
 	public static void index() {
 		List<NoteRow> noterows = NoteRow.find("order by position asc").fetch();
 		String cssStr = createCSSNameStr(noterows, "");
@@ -34,9 +35,13 @@ public class Application extends Controller {
 		JsonNote jsonNote = noteRow.addNote(title, text, pos);
 		try {
 			// TODO: Create some object here instead
-			StatefulModel.instance.event.publish("add;" + identify + ";"
-					+ id.toString() + ";" + title + ";" + jsonNote.id + ";"
+			
+			pusher.trigger("kanbanchannel", "kanbanevent", "add;" + identify + ";" 
+					+ id.toString() + ";" 
+					+ title + ";" 
+					+ jsonNote.id + ";"
 					+ jsonNote.positionInRow);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
