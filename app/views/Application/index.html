@@ -134,6 +134,11 @@ input:focus {
 	</div>
 	
 	<script type="text/javascript" charset="utf-8">
+	
+	if ($.browser.msie) {
+		alert("Looks like you are using Internet Explorer, this site only works with Chrome, Firefox or Safari!");
+	}
+	
 	$(function() {
 		$('a[rel=popover]').popover({
 			html:true,
