@@ -26,12 +26,12 @@ NoteRow(doing):
     
 NoteRow(done):
     board:      mytestboard
-    title:      Done
+    title:      Testing
     position:   2 
         
 NoteRow(testing):
     board:      mytestboard
-    title:      Testing
+    title:      Done
     position:   3   
            
 Note(n1):
