@@ -1,11 +1,11 @@
 package controllers;
 
-import models.User;
+import models.MyUser;
 
 public class Security extends Secure.Security {
 	
 	static boolean authenticate(String username, String password) {
-		 User admin = User.connect(username, password);
+		 MyUser admin = MyUser.connect(username, password);
 		 if(admin != null)
 			 return admin.isAdmin();
 		 else

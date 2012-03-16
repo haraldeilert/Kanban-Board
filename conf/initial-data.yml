@@ -3,12 +3,12 @@
 Board(mytestboard):
     title:          MyTestBoard
    
-User(myadmin):
+MyUser(myadmin):
     email: harald.eilert@gmail.com
     passwordHash: test
     otherBoards: -mytestboard
     
-User(myuser):
+MyUser(myuser):
     email: harald.eilert@avegagroup.se
     passwordHash: test
     otherBoards: -mytestboard

@@ -13,7 +13,7 @@ WS      /socket                                 Application.WebSocket.listen
 GET 	/admin								    Boards.list
 GET 	/admin									NoteRows.list
 GET 	/admin								    Notes.list
-GET 	/admin								    Users.list
+GET 	/admin								    MyUsers.list
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

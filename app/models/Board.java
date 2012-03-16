@@ -16,9 +16,9 @@ public class Board extends Model {
 	public List<NoteRow> noteRows;
 	
 	@ManyToOne
-	public User user;
+	public MyUser user;
 	
-	public Board(String title, User admin) {
+	public Board(String title, MyUser admin) {
 		this.noteRows = new ArrayList<NoteRow>();
 		this.title = title;
 		this.user = admin;
