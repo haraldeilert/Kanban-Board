@@ -1,21 +1,12 @@
 package controllers;
 
-import static play.libs.F.Matcher.ClassOf;
-import static play.libs.F.Matcher.Equals;
-import static play.mvc.Http.WebSocketEvent.SocketClosed;
-import static play.mvc.Http.WebSocketEvent.TextFrame;
-
 import java.util.List;
+
 import models.JsonNote;
 import models.Note;
 import models.NoteRow;
-import models.StatefulModel;
-import play.libs.F;
-import play.libs.WS.HttpResponse;
 import play.modules.pusher.Pusher;
 import play.mvc.Controller;
-import play.mvc.Http;
-import play.mvc.WebSocketController;
 
 public class Application extends Controller {
 	private static Pusher pusher = new Pusher();
@@ -34,8 +25,7 @@ public class Application extends Controller {
 
 		JsonNote jsonNote = noteRow.addNote(title, text, pos);
 		try {
-			// TODO: Create some object here instead
-			
+			// TODO: Create some Object here instead
 			pusher.trigger("kanbanchannel", "kanbanevent", "add;" + identify + ";" 
 					+ id.toString() + ";" 
 					+ title + ";" 
@@ -54,11 +44,9 @@ public class Application extends Controller {
 		try {
 			Note note = Note.findById(noteId);
 			note.delete();
-
 			pusher.trigger("kanbanchannel", "kanbanevent", "delete;" + identify + ";"
 					+ noteId.toString());
-			
-		} catch (Exception e) {
+			} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -66,7 +54,6 @@ public class Application extends Controller {
 
 	public static void editNote(Long noteId, String newTitle, String identify) {
 		JsonNote jsonNote = null;
-		System.out.println("*******newTitle: " + newTitle);
 		if (newTitle != null && !"".equals(newTitle)) {
 			try {
 				jsonNote = Note.editNote(noteId, newTitle);
