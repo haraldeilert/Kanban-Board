@@ -25,75 +25,14 @@ input:focus {
 
 .about {
 	  color:inherit;
-	  font-size:18px;
-	  font-weight:200;
+	  font-size:16px;
+	  font-weight:100;
 	  line-height:27px;
-	  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
-	
-	}
-
-
-.harald {
-  float:right;
-  margin-bottom:0px;
-  margin-left:0px;
-  margin-right:275px;
-  margin-top:0px;
+	 font-family: 'Merriweather', serif; 
 }
 </style>	
-<div id="myWhoAmI" class="modal hide fade">
-	<div class="modal-header">
-		<a class="close" data-dismiss="modal">&times;</a>
-		<h3>Harald Eilert<a href="http://www.linkedin.com/in/haraldeilert" target="_blank"><img src="@{'/public/images/linkedin.png'}"/></a></h3>
-	</div>
-	<div class="modal-body about">
-	I live in Malm&ouml;, a city in the south of Sweden, with my wife and two daughters. Work as a programmer mainly focusing on Java and the web.
-	Just came back from 10 months of parental leave hence the eager to catch up on new technology!
-	</div>
-</div>
-
-<div id="myModal" class="modal hide fade">
-	<div class="modal-header">
-		<a class="close" data-dismiss="modal">&times;</a>
-		<h3>About</h3>
-	</div>
-	<div class="modal-body about">
-		A demo(spike) of a Kanban Board where you can move, edit and delete notes. The cool thing is that all changes you make are updated in real time to other connected clients. 
-		<br/><br/>At first I built this to test <a href="http://www.playframework.org/" target="_blank">Play</a> framework 1.2.4(Yes I know 2.0 is just launched but I didn't feel like playing around with a beta version at the time.) 
-		I might rewrite it to 2.0 soon if I get some time!<br/><br/>
-		After seeing <a href="http://www.enterlab.dk" target="_blank">Enterlabs</a> new website I found <a href="http://twitter.github.com/bootstrap/" target="_blank">Bootstrap</a> which helped me get into html5 quickly, the demo banner is ripped from Enterlab(sorry guys).
-		<a href="http://jquery.com/" target="_blank">Jquery</a> was a blessing as always. I really want to use <a href="http://coffeescript.org/" target="_blank">Coffescript</a> to clean up the messy jquery/javascript code in the future..<br/><br/>
-		To implement websockets was really easy until I wanted to move the code to a cloud service, seems like there isn't a cloud service that supports websockets at the moment. 
-		Then I found out about <a href="http://pusher.com/">Pusher</a>(which is a great danish movie as well) and that was even easier and worked on <a href="http://www.heroku.com/" target="_blank">Heroku</a> cloud service!
-		Should mention that the sandbox version of Pusher that I use only supports 20 connections.<br/><br/>
-		Browser support is the newest versions of Chrome, Safari and Firefox.. IE users need to find paper and pen and make their own board! ;-)
-	</div>
-</div>
-
-<div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">Kanban Board</a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li><a data-toggle="modal" href="#myModal">About</a></li>
-              <li><a data-toggle="modal" href="#myWhoAmI">WhoAmI</a></li>
-              <li><a href="/admin">Admin login</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
-
-   <div>
-
-	<div class="hero-unit-myversion">
-	
+<div class="container">
+	<div class="hero-unit-myversion">	
 		<div class="row-fluid">
 			<!-- Loop starts here -->
 			#{list items:noterows, as:'noterow'}

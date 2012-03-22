@@ -13,13 +13,14 @@
         
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/ui.notify.css'}">
-        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/bootstrap/css/bootstrap.min.css'}">
-        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/bootstrap/css/bootstrap-responsive.min.css'}">
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/bootstrap/css/bootstrap.css'}">
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/bootstrap/css/bootstrap-responsive.css'}">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+        
 	<style type="text/css">
       body {
-         padding-top: 60px;
-         padding-left: 20px;
-         padding-bottom: 40px;
+      	 font-family: 'Open Sans', serif; 
       }
     </style>
     #{get 'moreStyles' /}
@@ -39,19 +40,73 @@
     <script src="@{'/public/javascripts/libs/bootstrap/tooltip.js'}"></script>
     <script src="@{'/public/javascripts/libs/bootstrap/popover.js'}"></script>
 	<script src="@{'/public/javascripts/libs/bootstrap/transition.js'}"></script>
+	<script src="@{'/public/javascripts/libs/bootstrap/collapse.js'}"></script>
 	
 	<!-- Pusher -->
 	<script src="http://js.pusher.com/1.11/pusher.min.js" type="text/javascript"></script>
     
 	#{get 'moreScripts' /}
         
-    </head>
-    <body>
-	<header>
-		<div id="demobanner">
-			<div>Demo</div>
-		</div
-	</header>
+       <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+<div id="myWhoAmI" class="modal hide fade">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">&times;</a>
+		<h3>Harald Eilert<a href="http://www.linkedin.com/in/haraldeilert" target="_blank"><img src="@{'/public/images/linkedin.png'}"/></a></h3>
+	</div>
+	<div class="modal-body about">
+	I live in Malm&ouml;, a city in the south of Sweden, with my wife and two daughters. Work as a programmer mainly focusing on Java and the web.
+	Just came back from 10 months of parental leave hence the eager to catch up on new technology!
+	</div>
+</div>
+
+<div id="myModal" class="modal hide fade">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">&times;</a>
+		<h2><span>About</span></h2>
+	</div>
+	<div class="modal-body about">
+		A demo(spike) of a Kanban Board where you can move, edit and delete notes. The cool thing is that all changes you make are updated in real time to other connected clients. 
+		<br/><br/>At first I built this to test <a href="http://www.playframework.org/" target="_blank">Play</a> framework 1.2.4(Yes I know 2.0 is just launched but I didn't feel like playing around with a beta version at the time.) 
+		I might rewrite it to 2.0 soon if I get some time!<br/><br/>
+		After seeing <a href="http://www.enterlab.dk" target="_blank">Enterlabs</a> new website I found <a href="http://twitter.github.com/bootstrap/" target="_blank">Bootstrap</a> which helped me get into html5 quickly, the demo banner is ripped from Enterlab(sorry guys).
+		<a href="http://jquery.com/" target="_blank">Jquery</a> was a blessing as always. I really want to use <a href="http://coffeescript.org/" target="_blank">Coffescript</a> to clean up the messy jquery/javascript code in the future..<br/><br/>
+		To implement websockets was really easy until I wanted to move the code to a cloud service, seems like there isn't a cloud service that supports websockets at the moment. 
+		Then I found out about <a href="http://pusher.com/">Pusher</a>(which is a great danish movie as well) and that was even easier and worked on <a href="http://www.heroku.com/" target="_blank">Heroku</a> cloud service!
+		Should mention that the sandbox version of Pusher that I use only supports 20 connections.<br/><br/>
+		Browser support is the newest versions of Chrome, Safari and Firefox.. IE users need to find paper and pen and make their own board! ;-)
+	</div>
+</div>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Kanban Board</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a data-toggle="modal" href="#myModal">About</a></li>
+              <li><a data-toggle="modal" href="#myWhoAmI">WhoAmI</a></li>
+              <li><a href="/admin">Admin login</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
 
 	#{doLayout /}
    <script type="text/javascript">
