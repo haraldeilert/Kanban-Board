@@ -6,6 +6,10 @@
 	${cssStr2} { margin: 5px 5px 5px 5px; padding: 25px; font-size: 1.2em; float: auto; margin-right: auto; margin-left: auto; }
 
 input {
+	width: 95%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 	height: 45px; padding: 20px 20px 0px 20px; margin: 0px 0px 0px 0px; 
 	background: #ffffff;
 	background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 20%); /* firefox */
@@ -50,7 +54,7 @@ input:focus {
 					
 				</ul>
 							<div id="addToggle${noterow.id}" style="display: none" class="input">
-								<input type="text" style="width:auto" class="note" name="addnote${noterow.id}"
+								<input type="text" class="note" name="addnote${noterow.id}"
 									id="addnote${noterow.id}">
 									<br/>
 									<input type="button" class="btn" id="button${noterow.id}" onClick="javascript:sendIt('${noterow.id}')" value="Add">
