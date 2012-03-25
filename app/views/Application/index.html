@@ -5,22 +5,19 @@
 	${cssStr} { list-style-type: none; margin: 5px 5px 5px 5px; padding: 0; float: auto; }
 	${cssStr2} { margin: 5px 5px 5px 5px; padding: 25px; font-size: 1.2em; float: auto; margin-right: auto; margin-left: auto; }
 
-input {
-	width: 95%;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-	height: 45px; padding: 20px 20px 0px 20px; margin: 0px 0px 0px 0px; 
-	background: #ffffff;
-	background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 20%); /* firefox */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(20%,#ffffff)); /* webkit */
-	border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
-	-moz-box-shadow: 0px 1px 0px #f2f2f2;-webkit-box-shadow: 0px 1px 0px #f2f2f2;
-	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; color: #1C94C4; font-weight:bold; text-align: center;
-	float: auto; margin-right: auto; margin-left: auto;
+.styled {
+	width: 93%;
+	height: 45px;
+	background: repeat-x scroll 50% 50% #FFFFFF;
+    border-radius: 6px 6px 6px 6px;
+    color: #1C94C4;
+    font-weight: bold;
+    outline: medium none;
+    resize: none; 
+	
 }
 
-input:focus {
+.styled:focus {
 	background: #ffffff;
 	background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 20%); /* firefox */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(20%,#ffffff)); /* webkit */
@@ -33,6 +30,11 @@ input:focus {
 	  font-weight:100;
 	  line-height:27px;
 	 font-family: 'Merriweather', serif; 
+}
+
+#fontme {
+	  font-size:14px;
+	  font-weight:bold;
 }
 </style>	
 <div class="container">
@@ -49,13 +51,13 @@ input:focus {
 						<li onmouseover="javascript:borderEffectAdd(${note.id})" onmouseout="javascript:borderEffectRemove(${note.id})" id="${note.id}" positionInRow="${note.positionInRow}" class="note">
 						<div class="topCorner"><a id="del${note.id}" onclick="javascript:deleteMe(${note.id})" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#">
 						<span class="closeMe"/>x</a></div>
-						<a class="edit${note.id}" rel="popover" onclick="javascript:editMe(${note.id}, '${note.title}')" title="Edit Note" data-content="Click here to edit the note!" href="#">${note.title}</a></li> 
+						<a class="edit${note.id}" id="fontme" rel="popover" onclick="javascript:editMe(${note.id}, '${note.title}')" title="Edit Note" data-content="Click here to edit the note!" href="#">${note.title}</a></li> 
 					#{/list}
 					
 				</ul>
 							<div id="addToggle${noterow.id}" style="display: none" class="input">
-								<input type="text" class="note" name="addnote${noterow.id}"
-									id="addnote${noterow.id}">
+								<textarea onkeypress="onKeyChange(event);" class="styled" name="addnote${noterow.id}"
+									id="addnote${noterow.id}"></textarea>
 									<br/>
 									<input type="button" class="btn" id="button${noterow.id}" onClick="javascript:sendIt('${noterow.id}')" value="Add">
 					
@@ -98,7 +100,7 @@ input:focus {
 	})
 	
 	function appendLINode(node, noteId, title, pos) {
-		node.append('<li onmouseover="javascript:borderEffectAdd('+noteId+')" onmouseout="javascript:borderEffectRemove('+noteId+')" id="'+noteId+'" positionInRow="'+pos+'" class="note"><a id="del'+noteId+'" class="topCorner" onclick="javascript:deleteMe('+noteId+')" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#"><span class="closeMe">x</span></a><a class="edit'+noteId+'" id="blob1" rel="popover" onclick="javascript:editMe('+noteId+', '+title+')" title="Edit Note" data-content="Click here to edit the note!" href="#">'+title+'</a></li>') 
+		node.append('<li onmouseover="javascript:borderEffectAdd('+noteId+')" onmouseout="javascript:borderEffectRemove('+noteId+')" id="'+noteId+'" positionInRow="'+pos+'" class="note"><a id="del'+noteId+'" class="topCorner" onclick="javascript:deleteMe('+noteId+')" rel="popover" title="Delete Note" data-content="Click here to delete the note!" style="float: right;" href="#"><span class="closeMe">x</span></a><a class="edit'+noteId+'" id="fontme" rel="popover" onclick="javascript:editMe('+noteId+', \''+title+'\')" title="Edit Note" data-content="Click here to edit the note!" href="#">'+title+'</a></li>') 
 		$("#del"+noteId).popover({offset: 10}).click(function(e) {
 			$(this).popover('hide');
 		});
@@ -165,7 +167,7 @@ input:focus {
 			identify: document.getElementById("identifyStr").value
 			}, function(task) {
 				if(task.title != null && task.title != '')
-					$('a.edit'+noteId).replaceWith(task.title)
+					$('a.edit'+noteId).text(task.title);
 			
 		}, 'json')
 		
@@ -200,17 +202,19 @@ input:focus {
 		}	
 	}
 
-	//Catch enter key!!
-	$(function() {
-		$("input:text[name*='addnote']").bind("keyup", function(e) {
-			if (e.which == '13') {
-				var idTmp = this.id;
-				idTmp = idTmp.replace("addnote", "");
-				sendIt(idTmp);
-			}
-		});
-	});
-
+	function onKeyChange(evt) {
+	   var charCode = (evt.which) ? evt.which : window.event.keyCode; 
+		if (charCode == 13) { 
+    		var idTmp = evt.target.id;
+			idTmp = idTmp.replace("addnote", "");
+			sendIt(idTmp);
+	        return false;
+	    }
+	    else {
+	        return true;
+    	}
+	}
+	
 	function sendIt(str) {
 		var tmp = "addnote" + str;
 		var tmp2 = ".posRow" + str;

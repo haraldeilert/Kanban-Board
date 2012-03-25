@@ -1,46 +1,3 @@
-#demobanner{
-    position:absolute;
-    top:0;
-    right:0;
-    overflow:hidden;
-    z-index:50000;
-    height:110px;
-    width:100px;
-}
-
-#demobanner>div{
-    float:right;
-    width:300px;
-    z-index:50001;
-    margin-right:-130px;
-    margin-top:15px;
-
-    background: #fefcea; /* Old browsers */
-    background: -moz-linear-gradient(top,  #fefcea 0%, #f1da36 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fefcea), color-stop(100%,#f1da36)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #fefcea 0%,#f1da36 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #fefcea 0%,#f1da36 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #fefcea 0%,#f1da36 100%); /* IE10+ */
-    background: linear-gradient(top,  #fefcea 0%,#f1da36 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */
-
-    padding:10px;
-    font-size:25px;
-    color: #000;
-    -moz-transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-
-    box-shadow: 0px 4px 6px #333;
-    -moz-box-shadow: 0px 4px 6px #333;
-    -webkit-box-shadow: 0px 4px 6px #333;
-    text-align:center;
-
-    border-top:1px solid #ccc;
-}
-
 .main-area{
    background-color: #E3E3E3;
    border-radius: 6px 6px 6px 6px;
@@ -48,23 +5,19 @@
    align: center;
  }
  
- .note{
-    background: repeat-x scroll 50% 50% #FFFFFF;
-    border-radius: 6px 6px 6px 6px;
-    color: #1C94C4;
-    font-weight: bold;
-    outline: medium none;
- }
+.note{
+   background: repeat-x scroll 50% 50% #FFFFFF;
+   border-radius: 6px 6px 6px 6px;
+}
  
- .hero-unit-myversion {
+.hero-unit-myversion {
     background-color: #5E768D;
     border-radius: 6px 6px 6px 6px;
     margin-bottom: 30px;
     padding: 60px;
     float: auto; 
     margin-right: 30px; 
-    margin-left: auto;
-    
+    margin-left: auto; 
 }
 
 .myDiver{
@@ -94,7 +47,6 @@
   border-top-width:1px;
   box-shadow:#333333 0 4px 6px;
   color:#000000;
-  font-weight: bold;
   z-index:50001;
 }
 
