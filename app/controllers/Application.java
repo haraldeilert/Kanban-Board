@@ -9,6 +9,8 @@ import play.modules.pusher.Pusher;
 import play.mvc.Controller;
 
 public class Application extends Controller {
+	private static final String KANBANEVENT = "kanbanevent";
+	private static final String KANBANCHANNEL = "kanbanchannel";
 	private static Pusher pusher = new Pusher();
 	
 	public static void index() {
@@ -26,7 +28,7 @@ public class Application extends Controller {
 		JsonNote jsonNote = noteRow.addNote(title, text, pos);
 		try {
 			// TODO: Create some Object here instead
-			pusher.trigger("kanbanchannel", "kanbanevent", "add;" + identify + ";" 
+			pusher.trigger(KANBANCHANNEL, KANBANEVENT, "add;" + identify + ";" 
 					+ id.toString() + ";" 
 					+ title + ";" 
 					+ jsonNote.id + ";"
@@ -44,7 +46,7 @@ public class Application extends Controller {
 		try {
 			Note note = Note.findById(noteId);
 			note.delete();
-			pusher.trigger("kanbanchannel", "kanbanevent", "delete;" + identify + ";"
+			pusher.trigger(KANBANCHANNEL, KANBANEVENT, "delete;" + identify + ";"
 					+ noteId.toString());
 			} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -58,7 +60,7 @@ public class Application extends Controller {
 			try {
 				jsonNote = Note.editNote(noteId, newTitle);
 				
-				pusher.trigger("kanbanchannel", "kanbanevent","update;" + identify + ";"
+				pusher.trigger(KANBANCHANNEL, KANBANEVENT,"update;" + identify + ";"
 						+ noteId + ";" + newTitle);
 
 			} catch (Exception e) {
@@ -99,7 +101,7 @@ public class Application extends Controller {
 			}
 		}
 
-		pusher.trigger("kanbanchannel", "kanbanevent", "moved;" + identify + ";"
+		pusher.trigger(KANBANCHANNEL, KANBANEVENT, "moved;" + identify + ";"
 				+ movedNote.id.toString() + ";" + movedNote.title + ";"
 				+ toList + ";" + fromList + ";" + stopUiIndex);
 	}
